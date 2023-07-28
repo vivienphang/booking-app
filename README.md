@@ -1,2 +1,2 @@
 # booking-app
-Project 2
+GA Project 2
