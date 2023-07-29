@@ -59,11 +59,11 @@ const NavLayout = () => {
       <Grid
         container
         direction="row"
-        justifyContent="flex-start"
-        alignItems="flex-start"
-        marginTop={10}
+        justifyContent="center"
+        alignItems="center"
+        marginTop={20}
       >
-        <Grid item xs={9}>
+        <Grid item xs={12}>
           <Outlet />
         </Grid>
       </Grid>
