@@ -12,42 +12,36 @@ const ImageCard = ({ capacity, id, meetingRoomId, name, size, equipment }) => {
   return (
     <Card
       sx={{
-        maxWidth: 345,
+        width: 955,
+        height: 400,
         p: 1,
         margin: 0.5,
       }}
     >
       <CardMedia
         sx={{
-          height: 250,
+          height: "65%",
+          objectFit: "cover",
         }}
         image={meetingRoom1}
         title="meeting-room"
       />
       <CardContent>
         <Typography
+          sx={{ fontSize: "30px", fontWeight: "bold" }}
           gutterBottom
-          variant="h5"
           component="div"
           textAlign="center"
         >
           {name}
         </Typography>
         <Typography
-          variant="body2"
+          sx={{ fontSize: "12px" }}
           color="text.secondary"
           textAlign="center"
           display="block"
         >
-          Capacity: {capacity}
-        </Typography>
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          textAlign="center"
-          display="block"
-        >
-          Size: {size}
+          Capacity: up to {capacity} pax
         </Typography>
         {/* <Typography
           variant="body2"
@@ -64,7 +58,15 @@ const ImageCard = ({ capacity, id, meetingRoomId, name, size, equipment }) => {
         </Typography> */}
       </CardContent>
       <CardActions sx={{ justifyContent: "center" }}>
-        <Button size="small">View more</Button>
+        <Button
+          sx={{
+            padding: 0,
+            width: 200,
+            marginTop: -1,
+          }}
+        >
+          View more
+        </Button>
       </CardActions>
     </Card>
   );

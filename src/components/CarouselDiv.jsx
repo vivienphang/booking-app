@@ -1,16 +1,14 @@
-import { Box, Icon, IconButton, Stack } from "@mui/material";
 import ImageCard from "./ImageCard";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useEffect, useState } from "react";
 import { getMeetingRooms } from "../auth/firebase";
+import Carousel from "react-material-ui-carousel";
 
 const CarouselDiv = () => {
   const [dataCollection, setDataCollection] = useState([]);
 
   const fetchData = async () => {
     const data = await getMeetingRooms();
-    console.log("Data in CarouselDiv - ", data)
+    console.log("Data in CarouselDiv - ", data);
     setDataCollection(data);
   };
   useEffect(() => {
@@ -19,7 +17,7 @@ const CarouselDiv = () => {
 
   const meetingRoomsInfo = dataCollection.map((ele, index) => {
     return (
-        <ImageCard 
+      <ImageCard
         key={ele.id}
         capacity={ele.capacity}
         name={ele.name}
@@ -27,37 +25,21 @@ const CarouselDiv = () => {
         size={ele.size}
         id={ele.id}
         equipment={ele.equipment}
-        />
-    )
-  })
+      />
+    );
+  });
 
-  const handleNext = () => {
-    console.log("NEXT --->");
-  };
-  const handlePrev = () => {
-    console.log("<--- PREV");
-  };
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
+    <Carousel
       sx={{
-        width: 1200,
+        width: 980,
         height: 450,
-        backgroundColor: "primary.dark",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
-      <IconButton onClick={handlePrev}>
-        <ArrowBackIosNewIcon />
-      </IconButton>
-      <Stack direction="row" spacing={2}>
-        {meetingRoomsInfo}
-      </Stack>
-      <IconButton onClick={handleNext}>
-        <ArrowForwardIosIcon />
-      </IconButton>
-    </Box>
+      {meetingRoomsInfo}
+    </Carousel>
   );
 };
 
