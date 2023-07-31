@@ -1,6 +1,8 @@
+
 import { Routes, Route } from "react-router-dom";
 import Landing from "./pages/Landing";
 import NavLayout from "./NavLayout";
+
 
 function App() {
   return (
