@@ -2,6 +2,7 @@
 import { Routes, Route } from "react-router-dom";
 import Landing from "./pages/Landing";
 import NavLayout from "./NavLayout";
+import RoomDisplay from "./components/RoomDisplay";
 
 
 function App() {
@@ -10,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<NavLayout />}>
           <Route index element={<Landing />} />
-          {/* <Route path="edit" element={<EditUser  userToken={userToken}/>} /> */}
+          <Route path="/:id" element={<RoomDisplay />} />
         </Route>
         <Route path="*" element={<Landing />} />
       </Routes>

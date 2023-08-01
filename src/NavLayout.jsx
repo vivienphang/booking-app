@@ -61,7 +61,7 @@ const NavLayout = () => {
         direction="row"
         justifyContent="center"
         alignItems="center"
-        marginTop={20}
+        marginTop={10}
       >
         <Grid item xs={12}>
           <Outlet />

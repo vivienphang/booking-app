@@ -6,25 +6,46 @@ import {
   Typography,
   Button,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import meetingRoom1 from "../assets/24-meeting-room.jpeg";
 
-const ImageCard = ({ capacity, id, meetingRoomId, name, size, equipment }) => {
+const ImageCard = ({
+  capacity,
+  id,
+  meetingRoomId,
+  name,
+  size,
+  equipment,
+  selectedRoomId,
+}) => {
+  const navigate = useNavigate();
+  
+  // View more button handler
+  const handleViewMore = () => {
+    console.log("room id - ", id, "room name - ", name);
+    navigate(`/${id}`)
+  };
+
   return (
     <Card
       sx={{
-        width: 955,
-        height: 400,
-        p: 1,
+        width: 1155,
+        height: 600,
+        p: 2,
         margin: 0.5,
+        backgroundColor: "antiquewhite",
+        borderRadius: "2%"
       }}
     >
       <CardMedia
         sx={{
-          height: "65%",
+          height: "75%",
           objectFit: "cover",
+          borderRadius: "2%"
         }}
         image={meetingRoom1}
         title="meeting-room"
+        
       />
       <CardContent>
         <Typography
@@ -36,29 +57,18 @@ const ImageCard = ({ capacity, id, meetingRoomId, name, size, equipment }) => {
           {name}
         </Typography>
         <Typography
-          sx={{ fontSize: "12px" }}
+          sx={{ fontSize: "14px" }}
           color="text.secondary"
           textAlign="center"
           display="block"
         >
           Capacity: up to {capacity} pax
         </Typography>
-        {/* <Typography
-          variant="body2"
-          color="text.secondary"
-          textAlign="center"
-          display="block"
-        >
-          Equipment:
-          <ul>
-            {equipment.map((item, index) => (
-              <li  key={index}>{item}</li>
-            ))}
-          </ul>
-        </Typography> */}
       </CardContent>
       <CardActions sx={{ justifyContent: "center" }}>
         <Button
+          onClick={handleViewMore}
+          variant="outlined"
           sx={{
             padding: 0,
             width: 200,
@@ -66,6 +76,7 @@ const ImageCard = ({ capacity, id, meetingRoomId, name, size, equipment }) => {
           }}
         >
           View more
+          {/* </Link> */}
         </Button>
       </CardActions>
     </Card>

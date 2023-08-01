@@ -8,12 +8,12 @@ const CarouselDiv = () => {
 
   const fetchData = async () => {
     const data = await getMeetingRooms();
-    console.log("Data in CarouselDiv - ", data);
     setDataCollection(data);
   };
   useEffect(() => {
     fetchData();
   }, []);
+
 
   const meetingRoomsInfo = dataCollection.map((ele, index) => {
     return (
@@ -32,10 +32,11 @@ const CarouselDiv = () => {
   return (
     <Carousel
       sx={{
-        width: 980,
-        height: 450,
+        width: 1200,
+        height: 800,
         position: "relative",
         overflow: "hidden",
+        // backgroundColor: "primary.dark",
       }}
     >
       {meetingRoomsInfo}

@@ -7,11 +7,7 @@ import CarouselDiv from "../components/CarouselDiv";
 // components: OverviewButton
 const LandingPage = () => {
   return (
-    <Box
-      display= "flex"
-        justifyContent="center"
-        alignItems="center"
-    >
+    <Box display="flex" justifyContent="center" alignItems="center" mt={8}>
       <CarouselDiv />
     </Box>
   );
