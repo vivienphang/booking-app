@@ -2,7 +2,8 @@
 import { Routes, Route } from "react-router-dom";
 import Landing from "./pages/Landing";
 import NavLayout from "./NavLayout";
-import RoomDisplay from "./components/RoomDisplay";
+import RoomDisplay from "./pages/RoomDisplay";
+import ViewAvailability from "./pages/ViewAvailability";
 
 
 function App() {
@@ -11,7 +12,8 @@ function App() {
       <Routes>
         <Route path="/" element={<NavLayout />}>
           <Route index element={<Landing />} />
-          <Route path="/:id" element={<RoomDisplay />} />
+          <Route path="/room/:id" element={<RoomDisplay />} />
+          <Route path="/room/:id/availability" element={<ViewAvailability />} />
         </Route>
         <Route path="*" element={<Landing />} />
       </Routes>

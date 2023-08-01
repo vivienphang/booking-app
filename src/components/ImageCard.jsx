@@ -23,7 +23,7 @@ const ImageCard = ({
   // View more button handler
   const handleViewMore = () => {
     console.log("room id - ", id, "room name - ", name);
-    navigate(`/${id}`)
+    navigate(`/room/${id}`)
   };
 
   return (
@@ -76,7 +76,6 @@ const ImageCard = ({
           }}
         >
           View more
-          {/* </Link> */}
         </Button>
       </CardActions>
     </Card>

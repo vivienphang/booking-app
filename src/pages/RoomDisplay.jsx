@@ -1,4 +1,4 @@
-import { Grid, ButtonBase, Typography } from "@mui/material";
+import { Grid, Button, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import meetingRoom1 from "../assets/24-meeting-room.jpeg";
 import { getRoomDataById } from "../auth/firebase";
@@ -7,7 +7,7 @@ import MonitorIcon from "@mui/icons-material/Monitor";
 import Microphone from "@mui/icons-material/KeyboardVoice";
 import Wifi from "@mui/icons-material/Wifi";
 import PowerAdaptor from "@mui/icons-material/ElectricalServices";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Img = styled("img")({
   margin: "auto",
@@ -20,7 +20,7 @@ const Img = styled("img")({
 const RoomDisplay = () => {
   const [roomDataById, setRoomDataById] = useState([]);
   let { id } = useParams();
-  console.log("id from param: ", id);
+  const navigate = useNavigate()
 
   const fetchData = async () => {
     const data = await getRoomDataById(id);
@@ -30,6 +30,12 @@ const RoomDisplay = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  // View availability button handler
+  const handleViewAvailability = () => {
+    console.log("availability btn clicked")
+    navigate(`/room/${id}/availability`)
+  }
 
   return (
     <Grid container spacing={2} m={1} p={1}>
@@ -80,23 +86,9 @@ const RoomDisplay = () => {
                 Loading...
               </Typography>
             )}
-
-            {/* <Typography textAlign="center" color="text.secondary">
-              {roomDataById ? (
-                <ul style={{ listStyle: "none", padding: 0 }}>
-                  {roomDataById.equipment.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
-              ) : (
-                <p>Loading...</p>
-              )}
-            </Typography> */}
           </Grid>
-          <Grid item>
-            <Typography sx={{ cursor: "pointer" }} variant="body2">
-              Remove
-            </Typography>
+          <Grid item textAlign="center">
+            <Button size="large" variant="outlined" onClick={handleViewAvailability}>View Availability</Button>
           </Grid>
         </Grid>
       </Grid>
