@@ -1,0 +1,17 @@
+.bookingHeader {
+    font-family: 'Poppins', sans-serif;
+    color: rgb(103, 103, 103);
+    font-size: 30px;
+    font-weight: 500;
+}
+.roomKey {
+    font-family: 'Poppins', sans-serif;
+    color: rgb(81, 81, 81);
+    font-size: 18px
+}
+.roomValue {
+    font-family: 'Poppins', sans-serif;
+    color: rgb(81, 81, 81);
+    font-size: 24px;
+    font-weight: 600;
+}
