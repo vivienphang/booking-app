@@ -4,7 +4,15 @@ import { useEffect } from "react";
 import styles from "./bookingForm.module.css";
 import { addNewBooking } from "../auth/firebase";
 
-const BookingForm = ({ selectedRoomData, setSelectedRoomData, bookingForm, setBookingForm, roomId }) => {
+const BookingForm = ({
+  selectedRoomData,
+  setSelectedRoomData,
+  bookingForm,
+  setBookingForm,
+  roomId,
+  events,
+  setEvents,
+}) => {
   const fetchData = async () => {
     const data = await getRoomDataById(roomId);
     setSelectedRoomData(data);
@@ -15,24 +23,31 @@ const BookingForm = ({ selectedRoomData, setSelectedRoomData, bookingForm, setBo
     fetchData();
   }, []);
 
-
   const handleFormInput = (e) => {
     setBookingForm((prev) => {
       return {
         ...prev,
         roomName: selectedRoomData.name,
-        [e.target.name]: e.target.value
-      }
-    })
-  }
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setBookingForm(addNewBooking(bookingForm))
+        [e.target.name]: e.target.value,
+      };
+    });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault(); 
+    const newBooking = await addNewBooking(bookingForm);
+    setEvents([...events, 
+      {
+        title: newBooking.title,
+        date: newBooking.date,
+        start: `${newBooking.date}T${newBooking.startTime}:00`,
+        end: `${newBooking.date}T${newBooking.endTime}:00`,
+      },
+    ]);
+
     // reset the form
     setBookingForm({ title: "", date: "", startTime: "", endTime: "" });
-    alert("Booking successful")
+    alert("Booking successful");
   };
-
 
   return (
     <>
@@ -41,7 +56,9 @@ const BookingForm = ({ selectedRoomData, setSelectedRoomData, bookingForm, setBo
       </Typography>
       <Typography gutterBottom textAlign="center" marginBottom={5}>
         <span className={styles.roomKey}>Room: </span>
-        <span className={styles.roomValue} name="roomName">{selectedRoomData.name}</span>
+        <span className={styles.roomValue} name="roomName">
+          {selectedRoomData.name}
+        </span>
       </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={3} textAlign="center" justifyContent="center">

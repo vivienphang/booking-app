@@ -4,7 +4,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import { Grid } from "@mui/material";
 import BookingForm from "../components/BookingForm";
 import styles from "./calendar.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const ViewAvailability = () => {
@@ -20,27 +20,35 @@ const ViewAvailability = () => {
     startTime: "",
     endTime: "",
   });
+  const [events, setEvents] = useState([
+    {
+      title: "",
+      date: "",
+      start: "",
+      end: "",
+    },
+  ]);
+
   let { id } = useParams();
 
   const handleDateClick = (arg) => {
     console.log(arg.dateStr);
   };
-  const events = [
-    {
-      title: "Title",
-      start: "2023-08-05T08:00:00",
-      end: "2023-08-05T09:00:00",
-    },
-  ];
+
+  useEffect(() => {
+    console.log("Rerendering; events have changed - ", events);
+  }, [events]);
 
   return (
     <Grid container spacing={1} p={3}>
       <Grid item xs={8} className={styles.CalendarView}>
         <FullCalendar
+          key={events.length} // force rerender of fullcalendar
           plugins={[dayGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
           dateClick={handleDateClick}
           events={events}
+          displayEventTime={true}
           height={"80vh"}
         />
       </Grid>
@@ -51,6 +59,8 @@ const ViewAvailability = () => {
           setBookingForm={setBookingForm}
           bookingForm={bookingForm}
           roomId={id}
+          events={events}
+          setEvents={setEvents}
         />
       </Grid>
     </Grid>
