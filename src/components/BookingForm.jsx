@@ -2,17 +2,36 @@ import { Grid, TextField, Typography, Button } from "@mui/material";
 import { getRoomDataById } from "../auth/firebase";
 import { useEffect } from "react";
 import styles from "./bookingForm.module.css";
+import { addNewBooking } from "../auth/firebase";
 
-const BookingForm = ({ bookingData, setBookingData, roomId }) => {
+const BookingForm = ({ selectedRoomData, setSelectedRoomData, bookingForm, setBookingForm, roomId }) => {
   const fetchData = async () => {
     const data = await getRoomDataById(roomId);
-    setBookingData(data);
-    console.log("Data in booking form - ", data);
+    setSelectedRoomData(data);
+    console.log("Selected room - ", data);
   };
 
   useEffect(() => {
     fetchData();
   }, []);
+
+
+  const handleFormInput = (e) => {
+    setBookingForm((prev) => {
+      return {
+        ...prev,
+        roomName: selectedRoomData.name,
+        [e.target.name]: e.target.value
+      }
+    })
+  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setBookingForm(addNewBooking(bookingForm))
+    // reset the form
+    setBookingForm({ title: "", date: "", startTime: "", endTime: "" });
+    alert("Booking successful")
+  };
 
 
   return (
@@ -22,9 +41,9 @@ const BookingForm = ({ bookingData, setBookingData, roomId }) => {
       </Typography>
       <Typography gutterBottom textAlign="center" marginBottom={5}>
         <span className={styles.roomKey}>Room: </span>
-        <span className={styles.roomValue}>{bookingData.name}</span>
+        <span className={styles.roomValue} name="roomName">{selectedRoomData.name}</span>
       </Typography>
-      <form>
+      <form onSubmit={handleSubmit}>
         <Grid container spacing={3} textAlign="center" justifyContent="center">
           <Grid item xs={12}>
             <TextField
@@ -32,8 +51,8 @@ const BookingForm = ({ bookingData, setBookingData, roomId }) => {
               placeholder="Add a title"
               type="text"
               name="title"
-              value={bookingData.date}
-              // onChange={handleChange}
+              value={bookingForm.title}
+              onChange={handleFormInput}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -46,8 +65,8 @@ const BookingForm = ({ bookingData, setBookingData, roomId }) => {
               label="Date"
               type="date"
               name="date"
-              value={bookingData.date}
-              // onChange={handleChange}
+              value={bookingForm.date}
+              onChange={handleFormInput}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -60,8 +79,8 @@ const BookingForm = ({ bookingData, setBookingData, roomId }) => {
               label="Start Time"
               type="time"
               name="startTime"
-              // value={bookingData.startTime}
-              // onChange={handleChange}
+              value={bookingForm.startTime}
+              onChange={handleFormInput}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -74,8 +93,8 @@ const BookingForm = ({ bookingData, setBookingData, roomId }) => {
               label="End Time"
               type="time"
               name="endTime"
-              // value={bookingData.endTime}
-              // onChange={handleChange}
+              value={bookingForm.endTime}
+              onChange={handleFormInput}
               InputLabelProps={{
                 shrink: true,
               }}

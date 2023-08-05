@@ -60,3 +60,20 @@ export const getRoomDataById = async (documentId) => {
     return null;
   }
 };
+
+export const addNewBooking = async (formInput) => {
+  if (!formInput) {
+    return;
+  } else {
+    console.log("Form input - ", formInput);
+    const newBooking = {
+      roomName: formInput.roomName,
+      title: formInput.title,
+      date: formInput.date,
+      startTime: formInput.startTime,
+      endTime: formInput.endTime,
+      username: formInput.username,
+    }
+    return newBooking;
+  }
+}
