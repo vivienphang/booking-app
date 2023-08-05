@@ -19,6 +19,7 @@ const ViewAvailability = () => {
     date: "",
     startTime: "",
     endTime: "",
+    username: "",
   });
   const [events, setEvents] = useState([
     {

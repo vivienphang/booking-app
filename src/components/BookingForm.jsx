@@ -120,6 +120,21 @@ const BookingForm = ({
             />
           </Grid>
           <Grid item xs={12}>
+            <TextField
+              label="Booked by"
+              placeholder="Your name"
+              type="text"
+              name="username"
+              value={bookingForm.username}
+              onChange={handleFormInput}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              required
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12}>
             <Button type="submit" variant="contained" color="primary">
               Book Meeting Room
             </Button>
