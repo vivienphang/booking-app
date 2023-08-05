@@ -42,17 +42,17 @@ const BookingForm = ({
       setEvents([
         ...events,
         {
-          title: newBooking.title,
-          date: newBooking.date,
-          start: `${newBooking.date}T${newBooking.startTime}:00`,
-          end: `${newBooking.date}T${newBooking.endTime}:00`,
+          title: newBooking.newBooking.title,
+          date: newBooking.newBooking.date,
+          start: `${newBooking.newBooking.date}T${newBooking.newBooking.startTime}:00`,
+          end: `${newBooking.newBooking.date}T${newBooking.newBooking.endTime}:00`,
         },
       ]);
     } else {
       alert("Error in submitting a booking.");
     }
     // reset the form
-    setBookingForm({ title: "", date: "", startTime: "", endTime: "" });
+    setBookingForm({ title: "", date: "", startTime: "", endTime: "", username: ""});
     alert("Booking successful");
   };
 
