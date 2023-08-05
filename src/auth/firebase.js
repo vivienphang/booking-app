@@ -4,6 +4,7 @@ import {
   getDocs,
   collection,
   doc,
+  addDoc,
   getDoc,
 } from "firebase/firestore";
 
@@ -48,7 +49,7 @@ export const getRoomDataById = async (documentId) => {
     if (roomDataSnapshot.exists()) {
       // The document exists, and you can access its data using the .data() method
       const roomData = roomDataSnapshot.data();
-      console.log("Room data - ", roomData)
+      // console.log("Room data - ", roomData)
       return roomData;
     } else {
       // The document does not exist
@@ -61,11 +62,13 @@ export const getRoomDataById = async (documentId) => {
   }
 };
 
+// Add a new booking to bookings collection
 export const addNewBooking = async (formInput) => {
   if (!formInput) {
     return;
   } else {
     console.log("Form input - ", formInput);
+    const bookingsCollectionRef = collection(db, "bookings");
     const newBooking = {
       roomName: formInput.roomName,
       title: formInput.title,
@@ -74,6 +77,17 @@ export const addNewBooking = async (formInput) => {
       endTime: formInput.endTime,
       username: formInput.username,
     }
-    return newBooking;
+
+    try {
+      const newBookingDocRef = await addDoc(bookingsCollectionRef, newBooking);
+      console.log("New booking in firebase: ", newBookingDocRef)
+      return {
+        bookingId: newBookingDocRef.id,
+        newBooking: newBooking
+      }
+    } catch (err) {
+      console.log("Error", err.message)
+      return null;
+    }
   }
 }

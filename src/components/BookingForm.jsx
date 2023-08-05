@@ -32,18 +32,25 @@ const BookingForm = ({
       };
     });
   };
-  const handleSubmit = async (e) => {
-    e.preventDefault(); 
-    const newBooking = await addNewBooking(bookingForm);
-    setEvents([...events, 
-      {
-        title: newBooking.title,
-        date: newBooking.date,
-        start: `${newBooking.date}T${newBooking.startTime}:00`,
-        end: `${newBooking.date}T${newBooking.endTime}:00`,
-      },
-    ]);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newBooking = await addNewBooking(bookingForm);
+
+    if (newBooking) {
+      console.log("Handle submit new booking - ", newBooking)
+      setEvents([
+        ...events,
+        {
+          title: newBooking.title,
+          date: newBooking.date,
+          start: `${newBooking.date}T${newBooking.startTime}:00`,
+          end: `${newBooking.date}T${newBooking.endTime}:00`,
+        },
+      ]);
+    } else {
+      alert("Error in submitting a booking.");
+    }
     // reset the form
     setBookingForm({ title: "", date: "", startTime: "", endTime: "" });
     alert("Booking successful");
