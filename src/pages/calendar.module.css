@@ -1,3 +1,38 @@
 .CalendarView :hover {
-    cursor: pointer;
+  cursor: pointer;
+}
+.ModalContentContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.ModalContentDiv {
+  font-family: "Poppins", sans-serif;
+  background-color: rgb(12, 51, 22);
+  color: bisque;
+  height: 300px;
+  width: 400px;
+  padding: 30px 40px;
+  border-radius: 50px;
+  border: 3px solid;
+  display: block;
+}
+.ModalHeader {
+  font-family: "Poppins", sans-serif;
+  font-size: 60px;
+  font-weight: 600;
+}
+
+.ModalValue {
+  padding: 5px;
+  font-family: "Poppins", sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.ModalKey {
+  font-family: "Poppins", sans-serif;
+  font-size: 24px;
+  font-weight: 500;
 }
