@@ -12,6 +12,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  IconButton,
 } from "@mui/material";
 import BookingForm from "../components/BookingForm";
 import styles from "./calendar.module.css";
@@ -20,6 +21,10 @@ import { useParams } from "react-router-dom";
 import { getRoomNames, getAllBookings } from "../auth/firebase";
 import RoomOutlinedIcon from "@mui/icons-material/RoomOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
+import SaveAltOutlinedIcon from "@mui/icons-material/SaveAltOutlined";
 
 const ViewAvailability = () => {
   const [selectedRoomData, setSelectedRoomData] = useState({
@@ -44,7 +49,7 @@ const ViewAvailability = () => {
   const [editedData, setEditedData] = useState({
     title: "",
     date: "",
-    nameName: "",
+    roomName: "",
     startTime: "",
     endTime: "",
   });
@@ -71,7 +76,7 @@ const ViewAvailability = () => {
     setIsEditMode(true);
     setEditedData({
       title: selectedEvent.title,
-      roomName: selectedEvent.roomName,
+      roomName: selectedEvent.extendedProps.name,
       date: selectedEvent.start.toISOString().substring(0, 10),
     });
   };
@@ -167,54 +172,110 @@ const ViewAvailability = () => {
         >
           <div className={styles.ModalContentContainer}>
             <div className={styles.ModalContentDiv}>
-              <Typography id="modal-title">
+              <Typography
+                id="modal-title"
+                display="flex"
+                justifyContent="space-between"
+              >
                 <span className={styles.ModalHeader}>
                   {isEditMode ? "Edit Details" : "Details"}
                 </span>
+                <IconButton>
+                  <DeleteOutlineOutlinedIcon
+                    sx={{ fontSize: 35, color: "brown" }}
+                  />
+                </IconButton>
               </Typography>
               {selectedEvent && (
                 <Stack>
                   {isEditMode ? (
-                    <div display="flex" flexDirection="column">
-                      <Typography>Title:</Typography>
-                      <TextField
-                        sx={{
-                          backgroundColor: "bisque",
-                          borderRadius: "25px",
-                        }}
-                        type="text"
-                        value={editedData.title}
-                        onChange={(e) =>
-                          setEditedData({
-                            ...editedData,
-                            title: e.target.value,
-                          })
-                        }
-                      />
-                      <Typography>Date:</Typography>
-                      <TextField
-                        sx={{ backgroundColor: "bisque", borderRadius: "25px" }}
-                        type="date"
-                        value={editedData.date}
-                        onChange={(e) =>
-                          setEditedData({
-                            ...editedData,
-                            date: e.target.value,
-                          })
-                        }
-                      />
-                      <InputLabel sx={{ color: "bisque" }}>Room: </InputLabel>
-                      <Select
-                        sx={{ backgroundColor: "bisque", borderRadius: "25px" }}
-                        value={editedData.roomName}
-                        label="Room"
-                      >
-                        {roomNames.map((room, index) => (
-                          <MenuItem key={index} value={room}>
-                            {room}
-                          </MenuItem>
-                        ))}
-                      </Select>
+                    <div display="flex">
+                      <div className={styles.EditCard}>
+                        <Typography>
+                          <span className={styles.ModalKey}>Title: </span>
+                        </Typography>
+                        <TextField
+                          className={styles.HoverFocus}
+                          sx={{
+                            backgroundColor: "rgb(255, 228, 196, 0.8)",
+                            borderRadius: "25px",
+                            marginLeft: "15px",
+                          }}
+                          type="text"
+                          value={editedData.title}
+                          onChange={(e) =>
+                            setEditedData({
+                              ...editedData,
+                              title: e.target.value,
+                            })
+                          }
+                          inputProps={{
+                            style: {
+                              height: "10px",
+                              width: "290px",
+                            },
+                          }}
+                        />
+                      </div>
+                      <div className={styles.EditCard}>
+                        <InputLabel
+                          sx={{
+                            color: "bisque",
+                            fontFamily: "Poppins, sans-serif",
+                            fontSize: "20px",
+                            fontWeight: 500,
+                            paddingRight: "0.5rem",
+                          }}
+                        >
+                          Room:
+                        </InputLabel>
+                        <Select
+                          className={styles.HoverFocus}
+                          sx={{
+                            backgroundColor: "rgb(255, 228, 196, 0.8)",
+                            borderRadius: "25px",
+                            width: "320px",
+                            height: "43px",
+                            marginTop: "1.5px",
+                          }}
+                          value={editedData.roomName}
+                          label="Room"
+                        >
+                          {roomNames.map((room, index) => (
+                            <MenuItem key={index} value={room}>
+                              {room}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </div>
+                      <div className={styles.EditCard}>
+                        <Typography>
+                          <span className={styles.ModalKey}>Date:</span>
+                        </Typography>
+                        <TextField
+                        className={styles.HoverFocus}
+                          sx={{
+                            backgroundColor: "rgb(255, 228, 196, 0.8)",
+                            borderRadius: "25px",
+                            marginLeft: "8px",
+                            marginTop: "2px",
+                          }}
+                          type="date"
+                          value={editedData.date}
+                          onChange={(e) =>
+                            setEditedData({
+                              ...editedData,
+                              date: e.target.value,
+                            })
+                          }
+                          inputProps={{
+                            style: {
+                              height: "10px",
+                              width: "290px",
+                            },
+                          }}
+                        />
+                      </div>
                     </div>
                   ) : (
                     <>
@@ -279,13 +340,33 @@ const ViewAvailability = () => {
 
               {isEditMode ? (
                 <>
-                  <button onClick={handleSaveButton}>Save</button>{" "}
-                  <button onClick={handleEventClose}>Cancel</button>
+                  <Typography display="flex" justifyContent="center" margin={2}>
+                    <IconButton onClick={handleSaveButton}>
+                      <SaveAltOutlinedIcon
+                        sx={{ fontSize: 25, color: "green" }}
+                      />
+                    </IconButton>{" "}
+                    <IconButton onClick={handleEventClose}>
+                      <CancelOutlinedIcon
+                        sx={{ fontSize: 25, color: "grey" }}
+                      />
+                    </IconButton>{" "}
+                  </Typography>
                 </>
               ) : (
                 <>
-                  <button onClick={handleEditButton}>Edit</button>{" "}
-                  <button onClick={handleEventClose}>Close</button>
+                  <Typography display="flex" justifyContent="center" margin={2}>
+                    <IconButton onClick={handleEditButton}>
+                      <EditCalendarOutlinedIcon
+                        sx={{ fontSize: 25, color: "green" }}
+                      />
+                    </IconButton>{" "}
+                    <IconButton onClick={handleEventClose}>
+                      <CancelOutlinedIcon
+                        sx={{ fontSize: 25, color: "grey" }}
+                      />
+                    </IconButton>{" "}
+                  </Typography>
                 </>
               )}
             </div>
