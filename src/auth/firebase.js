@@ -23,12 +23,29 @@ const app = initializeApp(firebaseConfig);
 // Initialize db
 export const db = getFirestore(app);
 
-// Get all data from collection
+// Get all data from collection => meeting rooms
 export const getMeetingRooms = async () => {
   const meetingRoomsRef = collection(db, "meeting-rooms");
   try {
     const meetingRoomsSnapshot = await getDocs(meetingRoomsRef);
     const data = meetingRoomsSnapshot.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+      };
+    });
+    return data;
+  } catch (err) {
+    console.log("Error fetching meeting rooms:", err.message);
+  }
+};
+
+// Get all data from collection => bookings
+export const getAllBookings = async () => {
+  const allBookingsRef = collection(db, "bookings");
+  try {
+    const allBookingsSnapshot = await getDocs(allBookingsRef);
+    const data = allBookingsSnapshot.docs.map((doc) => {
       return {
         id: doc.id,
         ...doc.data(),
@@ -91,3 +108,4 @@ export const addNewBooking = async (formInput) => {
     }
   }
 }
+
