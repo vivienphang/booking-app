@@ -29,12 +29,15 @@ const NavLayout = () => {
                     fontWeight: "bold",
                     display: "flex",
                     alignItems: "center",
+                    fontFamily: "Poppins",
+                    fontSize: "24px"
+                    
                   }}
-                  variant="h5"
+                  marginLeft={5}
                   color="rgb(20, 80, 70)"
             
                 >
-                  Booking App
+                  book it .
                 </Typography>
               </Link>
             </Grid>
@@ -55,7 +58,7 @@ const NavLayout = () => {
         direction="row"
         justifyContent="center"
         alignItems="center"
-        marginTop={10}
+        marginTop={1}
       >
         <Grid item xs={12} className={styles.OutletBackground}>
           <Outlet />

@@ -1,15 +1,16 @@
 // import all the components into landing page
 // components: Navbar (within Navbar: Logo, SignIn button or show Username)
 // components: CarouselDiv (within CarouselDiv: Image, CircleButton)
-import { Box, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import CarouselCards from "../components/CarouselCards";
-import CarouselInfo from "../components/CarouselInfo"
+import CarouselInfo from "../components/CarouselInfo";
 import { useEffect, useState } from "react";
 import { getMeetingRooms } from "../auth/firebase";
 
 // components: OverviewButton
 const LandingPage = () => {
   const [dataCollection, setDataCollection] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const fetchData = async () => {
     const data = await getMeetingRooms();
@@ -19,17 +20,20 @@ const LandingPage = () => {
     fetchData();
   }, []);
 
+  const handleSlideChange = (index) => {
+    setActiveIndex(index);
+  };
+
   return (
     // <Box display="flex" justifyContent="center" alignItems="center" mt={8}>
-      <Grid container spacing={1}>
-        <Grid item xs={4}>
-          <CarouselInfo dataCollection={dataCollection}/>
-        </Grid>
-        <Grid item xs={8}>
-          <CarouselCards dataCollection={dataCollection}/>
-        </Grid>
+    <Grid container p={5}>
+      <Grid item xs={5}>
+        <CarouselInfo dataCollection={dataCollection} activeIndex={activeIndex} />
       </Grid>
-  
+      <Grid item xs={7}>
+        <CarouselCards dataCollection={dataCollection} activeIndex={activeIndex} setActiveIndex={setActiveIndex} onSlideChange={handleSlideChange}/>
+      </Grid>
+    </Grid>
   );
 };
 

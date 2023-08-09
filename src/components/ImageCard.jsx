@@ -4,7 +4,6 @@ import {
   CardContent,
   CardActions,
   Typography,
-  Button,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import meetingRoom1 from "../assets/24-meeting-room.jpeg";
@@ -29,7 +28,7 @@ const ImageCard = ({
   return (
     <Card
       sx={{
-        width: "690px",
+        width: "98%",
         height: "600px",
         margin: 1,
         backgroundColor: "transparent",
