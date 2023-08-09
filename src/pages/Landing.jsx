@@ -4,6 +4,8 @@
 import { Grid } from "@mui/material";
 import CarouselCards from "../components/CarouselCards";
 import CarouselInfo from "../components/CarouselInfo";
+import PromoHeader from "../components/PromoHeader";
+import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
 import { getMeetingRooms } from "../auth/firebase";
 
@@ -26,14 +28,26 @@ const LandingPage = () => {
 
   return (
     // <Box display="flex" justifyContent="center" alignItems="center" mt={8}>
-    <Grid container p={5}>
-      <Grid item xs={5}>
-        <CarouselInfo dataCollection={dataCollection} activeIndex={activeIndex} />
+    <div style={{marginTop: "5rem"}}>
+      <PromoHeader />
+      <Grid container p={5}>
+        <Grid item xs={5}>
+          <CarouselInfo
+            dataCollection={dataCollection}
+            activeIndex={activeIndex}
+          />
+        </Grid>
+        <Grid item xs={7}>
+          <CarouselCards
+            dataCollection={dataCollection}
+            activeIndex={activeIndex}
+            setActiveIndex={setActiveIndex}
+            onSlideChange={handleSlideChange}
+          />
+        </Grid>
       </Grid>
-      <Grid item xs={7}>
-        <CarouselCards dataCollection={dataCollection} activeIndex={activeIndex} setActiveIndex={setActiveIndex} onSlideChange={handleSlideChange}/>
-      </Grid>
-    </Grid>
+      <Footer />
+    </div>
   );
 };
 
