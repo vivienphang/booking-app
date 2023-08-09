@@ -13,18 +13,31 @@ import {
   Select,
   MenuItem,
   IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Divider,
+  DialogActions,
+  DialogContentText,
 } from "@mui/material";
 import BookingForm from "../components/BookingForm";
 import styles from "./calendar.module.css";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getRoomNames, getAllBookings } from "../auth/firebase";
+import {
+  getRoomNames,
+  getAllBookings,
+  updateBookingId,
+  deleteBookingId,
+} from "../auth/firebase";
 import RoomOutlinedIcon from "@mui/icons-material/RoomOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import SaveAltOutlinedIcon from "@mui/icons-material/SaveAltOutlined";
+import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 
 const ViewAvailability = () => {
   const [selectedRoomData, setSelectedRoomData] = useState({
@@ -43,10 +56,12 @@ const ViewAvailability = () => {
   const [events, setEvents] = useState([]);
   const [bookingDataArray, setBookingDataArray] = useState([]); // State for booking data
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [roomNames, setRoomNames] = useState([]);
   const [editedData, setEditedData] = useState({
+    id: "",
     title: "",
     date: "",
     roomName: "",
@@ -72,24 +87,26 @@ const ViewAvailability = () => {
   };
 
   const handleEditButton = () => {
-    console.log("Edit button clicked");
     setIsEditMode(true);
+    console.log("Selected event: ", selectedEvent);
     setEditedData({
+      id: selectedEvent.id,
       title: selectedEvent.title,
       roomName: selectedEvent.extendedProps.name,
       date: selectedEvent.start.toISOString().substring(0, 10),
     });
+    console.log("Edited data - ", editedData);
   };
 
   const handleSaveButton = async () => {
     try {
-      // Perform the Firebase database update here using editedData
+      await updateBookingId(editedData.id, editedData);
       // After successful update, close the modal and reset the editedData
       setIsModalOpen(false);
       setIsEditMode(false);
       console.log("Saving edited data...");
-      console.log("Edited data: ", editedData);
       setEditedData({
+        id: "",
         title: "",
         roomName: "",
         date: "",
@@ -101,15 +118,24 @@ const ViewAvailability = () => {
     }
   };
 
-  //   const fetchRoomNames = async () => {
-  //     try {
-  //       const names = await getAllRooms();
-  //       console.log("Names - ", names);
-  //       setRoomNames(names);
-  //     } catch (err) {
-  //       console.error("Error fetching room names: ", err);
-  //     }
-  //   };
+  // const handleDeleteBookingId = async () => {
+
+  //   try {
+  //     const deleteBooking = await deleteBookingId(editedData.id);
+
+  //   } catch (err) {
+  //     console.log("Error deleting booking: ", err)
+  //   }
+  // }
+
+  const handleDeleteButton = () => {
+    setIsAlertDialogOpen(true);
+    console.log("Delete alert incoming!");
+    console.log(isAlertDialogOpen);
+  };
+  const handleDialogClose = () => {
+    setIsAlertDialogOpen(false);
+  };
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -123,11 +149,12 @@ const ViewAvailability = () => {
     };
     fetchNames();
     console.log("Booking data array: ", bookingDataArray);
-  }, [events]);
+  }, [events, editedData]);
 
   const formattedEvents = async () => {
     const formattedData = await Promise.all(
       bookingDataArray.map((bookingData) => ({
+        id: bookingData.id,
         title: bookingData.title,
         name: bookingData.roomName,
         date: new Date(bookingData.date).toLocaleDateString(),
@@ -148,7 +175,6 @@ const ViewAvailability = () => {
         end: editedEnd,
       });
     }
-    console.log("formatted data: ", formattedData);
     return formattedData;
   };
 
@@ -180,12 +206,41 @@ const ViewAvailability = () => {
                 <span className={styles.ModalHeader}>
                   {isEditMode ? "Edit Details" : "Details"}
                 </span>
-                <IconButton>
+                <IconButton onClick={handleDeleteButton}>
                   <DeleteOutlineOutlinedIcon
                     sx={{ fontSize: 35, color: "brown" }}
                   />
                 </IconButton>
               </Typography>
+              {isAlertDialogOpen && (
+                <Dialog
+                  open={isAlertDialogOpen}
+                  onClose={handleDialogClose}
+                  PaperProps={{
+                    style: {
+                      borderRadius: '20px',
+                      backgroundColor: "rgb(200, 119, 33, 0.9)",
+                      maxWidth: "50%"
+                    },
+                  }}
+                >
+                  <DialogTitle className={styles.DialogTitle}>
+                    <Icon sx={{ mr: 1, color: "yellow"}}><WarningRoundedIcon/></Icon>
+                    Delete event?
+                  </DialogTitle>
+                  <DialogContent id="alert-dialog-description">
+                    <DialogContentText className={styles.DialogText}>
+                      Are you sure you want to delete the event <span style={{fontWeight: "bold"}}>{selectedEvent.title}</span>?
+                      You can't undo this action.
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions display="flex" justifyContent="center" >
+                    <IconButton onClick={handleDialogClose} className={styles.DialogBtnDelete}><CheckCircleOutlineOutlinedIcon/></IconButton>
+                    <IconButton onClick={handleDialogClose} className={styles.DialogBtnClose}><CancelOutlinedIcon/>
+                    </IconButton>
+                  </DialogActions>
+                </Dialog>
+              )}
               {selectedEvent && (
                 <Stack>
                   {isEditMode ? (
@@ -253,7 +308,7 @@ const ViewAvailability = () => {
                           <span className={styles.ModalKey}>Date:</span>
                         </Typography>
                         <TextField
-                        className={styles.HoverFocus}
+                          className={styles.HoverFocus}
                           sx={{
                             backgroundColor: "rgb(255, 228, 196, 0.8)",
                             borderRadius: "25px",

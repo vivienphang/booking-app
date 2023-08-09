@@ -6,6 +6,9 @@ import {
   doc,
   addDoc,
   getDoc,
+  setDoc,
+  updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -22,27 +25,6 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize db
 export const db = getFirestore(app);
-
-
-// Get rooms data from meeting rooms
-// export const getAllRooms = async () => {
-//   const roomNames = [];
-//   const unsubscribe = collection(db, "meeting-rooms").onSnapshot(snapshot => {
-//     snapshot.forEach(doc => {
-//       const name = doc.data().name; 
-//       roomNames.push(name);
-//     });
-//   });
-//   console.log("Room names: ", )
-//   // Wait for the initial snapshot to be fetched
-//   await new Promise(resolve => {
-//     unsubscribe();
-//     resolve();
-//   });
-
-//   return roomNames;
-// };
-
 
 // Get all data from collection => meeting rooms
 export const getMeetingRooms = async () => {
@@ -61,19 +43,20 @@ export const getMeetingRooms = async () => {
   }
 };
 
+// Get room names from meeting rooms collection
 export const getRoomNames = async () => {
-  let roomData = []
-  const roomNamesRef = collection(db, "meeting-rooms")
+  let roomData = [];
+  const roomNamesRef = collection(db, "meeting-rooms");
   try {
     const snapshot = await getDocs(roomNamesRef);
     snapshot.docs.map((doc) => {
-      roomData.push(doc.data().name)
-    })
-    return roomData
+      roomData.push(doc.data().name);
+    });
+    return roomData;
   } catch (err) {
-    console.log("Error", err)
+    console.log("Error fetching room names:", err);
   }
-}
+};
 
 // Get all data from collection => bookings
 export const getAllBookings = async () => {
@@ -128,19 +111,45 @@ export const addNewBooking = async (formInput) => {
       startTime: formInput.startTime,
       endTime: formInput.endTime,
       username: formInput.username,
-    }
+    };
 
     try {
       const newBookingDocRef = await addDoc(bookingsCollectionRef, newBooking);
-      console.log("New booking in firebase: ", newBookingDocRef)
+      console.log("New booking in firebase: ", newBookingDocRef);
       return {
         bookingId: newBookingDocRef.id,
-        newBooking: newBooking
-      }
+        newBooking: newBooking,
+      };
     } catch (err) {
-      console.log("Error", err.message)
+      console.log("Error adding new booking:", err.message);
       return null;
     }
   }
-}
+};
 
+// Update specific booking id
+export const updateBookingId = async (bookingId, editedData) => {
+  const bookingDocRef = doc(db, "bookings", bookingId);
+  try {
+    await updateDoc(bookingDocRef, editedData);
+    console.log("Booking updated successfully");
+
+    // Fetch the updated data from the document
+    const updatedDoc = await getDoc(bookingDocRef);
+    const updatedBookingData = updatedDoc.data();
+    console.log("Updated booking data - ", updatedBookingData);
+  } catch (err) {
+    console.log("Error updating data: ", err.message);
+  }
+};
+
+// Delete specific booking id
+export const deleteBookingId = async (bookingId) => {
+  const bookingDocRef = doc(db, "bookings", bookingId);
+
+  try {
+    await deleteDoc(bookingDocRef);
+  } catch (err) {
+    console.log("Error deleting booking: ", err)
+  }
+}

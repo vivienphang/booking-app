@@ -19,65 +19,60 @@ const ImageCard = ({
   selectedRoomId,
 }) => {
   const navigate = useNavigate();
-  
+
   // View more button handler
   const handleViewMore = () => {
     console.log("room id - ", id, "room name - ", name);
-    navigate(`/room/${id}`)
+    navigate(`/room/${id}`);
   };
 
   return (
     <Card
       sx={{
-        width: 1155,
-        height: 600,
-        p: 2,
-        margin: 0.5,
-        backgroundColor: "antiquewhite",
-        borderRadius: "2%"
+        width: "690px",
+        height: "600px",
+        margin: 1,
+        backgroundColor: "transparent",
+        borderRadius: "2%",
+        position: "relative",
+        display: "flex",
       }}
     >
       <CardMedia
         sx={{
-          height: "75%",
+          height: "100%",
+          width: "100%",
           objectFit: "cover",
-          borderRadius: "2%"
         }}
         image={meetingRoom1}
         title="meeting-room"
-        
       />
-      <CardContent>
-        <Typography
-          sx={{ fontSize: "30px", fontWeight: "bold" }}
-          gutterBottom
-          component="div"
-          textAlign="center"
-        >
-          {name}
-        </Typography>
-        <Typography
-          sx={{ fontSize: "14px" }}
-          color="text.secondary"
-          textAlign="center"
-          display="block"
-        >
-          Capacity: up to {capacity} pax
-        </Typography>
+      <CardContent
+        sx={{
+          position: "absolute", // Position the CardContent absolutely
+          bottom: 0, // Position it at the bottom
+          width: "100%", // Make it full width
+          backgroundColor: "rgba(0, 0, 0, 0.5)", // Add a background color
+          padding: "5px", // Add padding
+          zIndex: 1, // Ensure CardContent is above the CardMedia
+          height: "20%",
+        }}
+      >
+        <CardActions onClick={handleViewMore} sx={{ justifyContent: "center", cursor: "pointer"}}>
+          <Typography
+            sx={{
+              fontFamily: "Poppins",
+              color: "antiquewhite",
+              fontSize: "30px",
+              mt: 5,
+            }}
+            component="div"
+            textAlign="center"
+          >
+            Room: <span style={{ fontWeight: "bold" }}>{name}</span>
+          </Typography>
+        </CardActions>
       </CardContent>
-      <CardActions sx={{ justifyContent: "center" }}>
-        <Button
-          onClick={handleViewMore}
-          variant="outlined"
-          sx={{
-            padding: 0,
-            width: 200,
-            marginTop: -1,
-          }}
-        >
-          View more
-        </Button>
-      </CardActions>
     </Card>
   );
 };

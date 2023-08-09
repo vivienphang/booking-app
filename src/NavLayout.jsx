@@ -1,18 +1,21 @@
 import { Link, Outlet } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import { Grid, AppBar, Box, Toolbar } from "@mui/material";
+// import Menu from "@mui/material/Menu";
+// import MenuIcon from "@mui/icons-material/Menu";
+// import Container from "@mui/material/Container";
+// import Avatar from "@mui/material/Avatar";
+import { Grid, AppBar, Box, Toolbar, Button } from "@mui/material";
+import styles from "./navLayout.module.css"
 
 const NavLayout = () => {
+  const handleClick = () => {
+    console.log("sign up")
+  }
   return (
     <>
-      <AppBar>
-        <Toolbar>
+      <AppBar >
+        <Toolbar className={styles.Navbar}>
           <Grid
             container
             direction="row"
@@ -28,7 +31,7 @@ const NavLayout = () => {
                     alignItems: "center",
                   }}
                   variant="h5"
-                  color="white"
+                  color="rgb(20, 80, 70)"
             
                 >
                   Booking App
@@ -36,22 +39,13 @@ const NavLayout = () => {
               </Link>
             </Grid>
             <Grid item xs={2} display="flex" justifyContent="space-evenly">
-              <IconButton
+              <Button
                 size="small"
-                sx={{ p: 1 }}
+                variant="text"
+                sx={{ p: 1, color: "rgb(20, 80, 70)"}}
               >
-                <Typography
-                  sx={{
-                    fontWeight: "bold",
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                  variant="h6"
-                  color="white"
-                >
-                  Sign Up
-                </Typography>
-              </IconButton>
+                  Member Login
+              </Button>
             </Grid>
           </Grid>
         </Toolbar>
@@ -63,7 +57,7 @@ const NavLayout = () => {
         alignItems="center"
         marginTop={10}
       >
-        <Grid item xs={12}>
+        <Grid item xs={12} className={styles.OutletBackground}>
           <Outlet />
         </Grid>
       </Grid>
