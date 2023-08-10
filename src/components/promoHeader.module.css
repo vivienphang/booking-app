@@ -25,6 +25,7 @@
     color: black;
     height: 50px;
     width: 50px;
+    padding-bottom: 8px;
 }
 .ChipButton {
     background-color: antiquewhite !important;
@@ -33,7 +34,7 @@
     color: rgb(20, 80, 70) !important;
     font-family: "Poppins" !important;
     font-weight: 500;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 .ChipButton:hover {
     background-color: rgb(239, 207, 166)!important;

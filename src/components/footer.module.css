@@ -1,0 +1,27 @@
+.FooterDivider {
+    width: "100px";
+    height: "15px";
+    border-bottom-width: 1px;
+    background-color: rgb(175, 167, 156);
+}
+
+.FooterText {
+    font-family: "Poppins";
+    color: antiquewhite;
+    font-size: 14px;
+}
+.FooterContainer {
+    display: flex;
+    justify-content: space-around;
+    padding: 50px;
+}
+.MediaIcons {
+    color: antiquewhite;
+    margin-right: 5px;
+    font-size: medium;
+}
+.MediaIconsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
