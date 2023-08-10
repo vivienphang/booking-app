@@ -1,6 +1,5 @@
-import { Grid, Button, Typography } from "@mui/material";
+import { Grid, Button, Typography, Chip } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import meetingRoom1 from "../assets/24-meeting-room.jpeg";
 import { getRoomDataById } from "../auth/firebase";
 import { useEffect, useState } from "react";
 import MonitorIcon from "@mui/icons-material/Monitor";
@@ -8,6 +7,7 @@ import Microphone from "@mui/icons-material/KeyboardVoice";
 import Wifi from "@mui/icons-material/Wifi";
 import PowerAdaptor from "@mui/icons-material/ElectricalServices";
 import { useNavigate, useParams } from "react-router-dom";
+import styles from "./roomDisplay.module.css"
 
 const Img = styled("img")({
   margin: "auto",
@@ -24,6 +24,7 @@ const RoomDisplay = () => {
 
   const fetchData = async () => {
     const data = await getRoomDataById(id);
+    console.log("data in room display -", data)
     setRoomDataById(data);
   };
 
@@ -38,12 +39,12 @@ const RoomDisplay = () => {
   }
 
   return (
-    <Grid container spacing={2} m={1} p={1}>
+    <Grid container spacing={2} mt={14} ml={2} mb={6} p={1}>
       <Grid item xs={6} alignItems="center">
         <Img
           alt="meeting-room-24"
-          src={meetingRoom1}
-          height="750"
+          src={roomDataById.photoUrl}
+          height="600"
           width="800"
         />
       </Grid>
@@ -88,7 +89,7 @@ const RoomDisplay = () => {
             )}
           </Grid>
           <Grid item textAlign="center">
-            <Button size="large" variant="outlined" onClick={handleViewAvailability}>View Availability</Button>
+            <Chip className={styles.ChipButton} label="View Availability" onClick={handleViewAvailability}></Chip>
           </Grid>
         </Grid>
       </Grid>

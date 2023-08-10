@@ -6,7 +6,6 @@ import {
   doc,
   addDoc,
   getDoc,
-  setDoc,
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
@@ -84,7 +83,7 @@ export const getRoomDataById = async (documentId) => {
     if (roomDataSnapshot.exists()) {
       // The document exists, and you can access its data using the .data() method
       const roomData = roomDataSnapshot.data();
-      // console.log("Room data - ", roomData)
+      console.log("Room data - ", roomData)
       return roomData;
     } else {
       // The document does not exist

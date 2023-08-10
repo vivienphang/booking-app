@@ -16,6 +16,7 @@ const CarouselCards = ({
         size={ele.size}
         id={ele.id}
         equipment={ele.equipment}
+        url={ele.photoUrl}
         // index={index}
       />
     );
@@ -56,7 +57,7 @@ const CarouselCards = ({
           
         }}
         animation="slide"
-        indicators={true}
+        indicators={false}
         autoPlay={false}
         timeout={500}
         navButtonsAlwaysVisible={true}

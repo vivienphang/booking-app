@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 // import Avatar from "@mui/material/Avatar";
 import { Grid, AppBar, Box, Toolbar, Button } from "@mui/material";
 import styles from "./navLayout.module.css"
+import Footer from "./components/Footer";
 
 const NavLayout = () => {
   const handleClick = () => {
@@ -63,6 +64,7 @@ const NavLayout = () => {
         <Grid item xs={12} className={styles.OutletBackground}>
           <Outlet />
         </Grid>
+        <Footer />
       </Grid>
     </>
   );

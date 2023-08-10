@@ -9,7 +9,6 @@ import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
 import { getMeetingRooms } from "../auth/firebase";
 
-// components: OverviewButton
 const LandingPage = () => {
   const [dataCollection, setDataCollection] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -47,7 +46,6 @@ const LandingPage = () => {
           </Grid>
         </Grid>
       </div>
-      <Footer />
     </div>
   );
 };

@@ -1,9 +1,10 @@
 import FullCalendar from "@fullcalendar/react";
+import timeGridPlugin from "@fullcalendar/timegrid";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import {
-  Button,
   Grid,
+  Divider,
   Modal,
   Typography,
   Stack,
@@ -16,7 +17,6 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  Divider,
   DialogActions,
   DialogContentText,
 } from "@mui/material";
@@ -36,8 +36,9 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import SaveAltOutlinedIcon from "@mui/icons-material/SaveAltOutlined";
-import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
-import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 const ViewAvailability = () => {
   const [selectedRoomData, setSelectedRoomData] = useState({
@@ -118,15 +119,25 @@ const ViewAvailability = () => {
     }
   };
 
-  // const handleDeleteBookingId = async () => {
+  const handleDeleteBookingId = async () => {
+    if (selectedEvent) {
+      try {
+        await deleteBookingId(selectedEvent.id);
 
-  //   try {
-  //     const deleteBooking = await deleteBookingId(editedData.id);
+        // Update bookingDataArray by removing the deleted booking
+        setBookingDataArray((prevData) =>
+          prevData.filter((booking) => booking.id !== selectedEvent.id)
+        );
+        console.log("Booking data array -", bookingDataArray);
 
-  //   } catch (err) {
-  //     console.log("Error deleting booking: ", err)
-  //   }
-  // }
+        // Close the modal
+        setIsAlertDialogOpen(false);
+        setIsModalOpen(false);
+      } catch (err) {
+        console.log("Error deleting booking: ", err);
+      }
+    }
+  };
 
   const handleDeleteButton = () => {
     setIsAlertDialogOpen(true);
@@ -179,15 +190,26 @@ const ViewAvailability = () => {
   };
 
   return (
-    <Grid container spacing={1} p={3}>
+    <Grid container spacing={1} p={3} mt={11}>
       <Grid item xs={8} className={styles.CalendarView}>
         <FullCalendar
-          plugins={[dayGridPlugin, interactionPlugin]}
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
+          views={{
+            dayGridMonth: { buttonText: "Month" },
+            dayGridWeek: { buttonText: "Week" },
+            timeGridDay: { buttonText: "Day" },
+            timeGridWeek: { buttonText: "Week" }, // Add week view button
+          }}
+          headerToolbar={{
+            left: "prev,next today",
+            center: "title",
+            right: "timeGridWeek,timeGridDay,dayGridMonth", // user can switch between the two
+          }}
           dateClick={handleDateClick}
           events={formattedEvents}
           displayEventTime={true}
-          height={"80vh"}
+          height={"100vh"}
           eventClick={handleEventClick}
         />
         <Modal
@@ -218,25 +240,40 @@ const ViewAvailability = () => {
                   onClose={handleDialogClose}
                   PaperProps={{
                     style: {
-                      borderRadius: '20px',
-                      backgroundColor: "rgb(200, 119, 33, 0.9)",
-                      maxWidth: "50%"
+                      borderRadius: "20px",
+                      backgroundColor: "antiquewhite",
+                      maxWidth: "50%",
+                      border: "1px solid black",
                     },
                   }}
                 >
                   <DialogTitle className={styles.DialogTitle}>
-                    <Icon sx={{ mr: 1, color: "yellow"}}><WarningRoundedIcon/></Icon>
+                    <Icon sx={{ mr: 1, color: "red" }}>
+                      <WarningRoundedIcon />
+                    </Icon>
                     Delete event?
                   </DialogTitle>
                   <DialogContent id="alert-dialog-description">
                     <DialogContentText className={styles.DialogText}>
-                      Are you sure you want to delete the event <span style={{fontWeight: "bold"}}>{selectedEvent.title}</span>?
-                      You can't undo this action.
+                      Are you sure you want to delete the event{" "}
+                      <span style={{ fontWeight: "bold" }}>
+                        {selectedEvent.title}
+                      </span>
+                      ? You can't undo this action.
                     </DialogContentText>
                   </DialogContent>
-                  <DialogActions display="flex" justifyContent="center" >
-                    <IconButton onClick={handleDialogClose} className={styles.DialogBtnDelete}><CheckCircleOutlineOutlinedIcon/></IconButton>
-                    <IconButton onClick={handleDialogClose} className={styles.DialogBtnClose}><CancelOutlinedIcon/>
+                  <DialogActions display="flex" justifyContent="center">
+                    <IconButton
+                      onClick={handleDeleteBookingId}
+                      className={styles.DialogBtnDelete}
+                    >
+                      <CheckCircleOutlineOutlinedIcon />
+                    </IconButton>
+                    <IconButton
+                      onClick={handleDialogClose}
+                      className={styles.DialogBtnClose}
+                    >
+                      <CancelOutlinedIcon />
                     </IconButton>
                   </DialogActions>
                 </Dialog>
@@ -295,6 +332,12 @@ const ViewAvailability = () => {
                           }}
                           value={editedData.roomName}
                           label="Room"
+                          onChange={(e) =>
+                            setEditedData({
+                              ...editedData,
+                              roomName: e.target.value,
+                            })
+                          }
                         >
                           {roomNames.map((room, index) => (
                             <MenuItem key={index} value={room}>
@@ -355,7 +398,7 @@ const ViewAvailability = () => {
                       <div display="flex">
                         <Typography id="modal-description">
                           <Icon>
-                            <AccessTimeOutlinedIcon />
+                            <CalendarMonthIcon />
                           </Icon>
                           <span className={styles.ModalValue}>
                             {selectedEvent.start.toLocaleDateString("en-US", {
@@ -368,26 +411,21 @@ const ViewAvailability = () => {
                       </div>
                       <div display="flex">
                         <Typography id="modal-description">
-                          <span className={styles.ModalKey}>Start time: </span>
+                          <Icon>
+                            <AccessTimeOutlinedIcon />
+                          </Icon>
                           <span className={styles.ModalValue}>
-                            {selectedEvent.start.toLocaleTimeString([], {
+                            {`${selectedEvent.start.toLocaleTimeString([], {
                               hour: "2-digit",
                               minute: "2-digit",
-                            })}
+                            })} - ${selectedEvent.end.toLocaleTimeString([], {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}`}
                           </span>
                         </Typography>
                       </div>
-                      <div display="flex">
-                        <Typography id="modal-description">
-                          <span className={styles.ModalKey}>End time: </span>
-                          <span className={styles.ModalValue}>
-                            {selectedEvent.end.toLocaleTimeString([], {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            })}
-                          </span>
-                        </Typography>
-                      </div>
+                      <Divider sx={{ backgroundColor: "grey", mt: 4}}/>
                     </>
                   )}
                 </Stack>
@@ -395,15 +433,16 @@ const ViewAvailability = () => {
 
               {isEditMode ? (
                 <>
+                <Divider sx={{ backgroundColor: "grey", mt: 4}}/>
                   <Typography display="flex" justifyContent="center" margin={2}>
                     <IconButton onClick={handleSaveButton}>
                       <SaveAltOutlinedIcon
-                        sx={{ fontSize: 25, color: "green" }}
+                        sx={{ fontSize: 30, color: "rgb(72,171,83)" }}
                       />
                     </IconButton>{" "}
                     <IconButton onClick={handleEventClose}>
                       <CancelOutlinedIcon
-                        sx={{ fontSize: 25, color: "grey" }}
+                        sx={{ fontSize: 30, color: "antiquewhite" }}
                       />
                     </IconButton>{" "}
                   </Typography>
@@ -413,12 +452,12 @@ const ViewAvailability = () => {
                   <Typography display="flex" justifyContent="center" margin={2}>
                     <IconButton onClick={handleEditButton}>
                       <EditCalendarOutlinedIcon
-                        sx={{ fontSize: 25, color: "green" }}
+                        sx={{ fontSize: 25, color: "rgb(72,171,83)" }}
                       />
                     </IconButton>{" "}
                     <IconButton onClick={handleEventClose}>
                       <CancelOutlinedIcon
-                        sx={{ fontSize: 25, color: "grey" }}
+                        sx={{ fontSize: 25, color: "antiquewhite" }}
                       />
                     </IconButton>{" "}
                   </Typography>

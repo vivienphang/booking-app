@@ -6,7 +6,6 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import meetingRoom1 from "../assets/24-meeting-room.jpeg";
 
 const ImageCard = ({
   capacity,
@@ -16,6 +15,7 @@ const ImageCard = ({
   size,
   equipment,
   selectedRoomId,
+  url
 }) => {
   const navigate = useNavigate();
 
@@ -42,7 +42,7 @@ const ImageCard = ({
           width: "100%",
           objectFit: "cover",
         }}
-        image={meetingRoom1}
+        image={url}
         title="meeting-room"
       />
       <CardContent

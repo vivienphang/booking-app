@@ -9,20 +9,21 @@
 }
 .ModalContentDiv {
   font-family: "Poppins", sans-serif;
-  background-color: rgb(11, 37, 11);
-  color: rgb(255, 228, 196);
+  background-color: rgb(5, 71, 47);
+  color: antiquewhite;
   height: 300px;
   width: 400px;
   padding: 30px 40px;
   border-radius: 50px;
-  border: 5px solid;
+  border: 1px solid;
   display: block;
 }
 .ModalHeader {
   font-family: "Poppins", sans-serif;
-  font-size: 60px;
+  font-size: 50px;
   font-weight: 600;
   justify-content: space-around;
+  margin-bottom: 10px;
 }
 
 .ModalValue {
@@ -47,8 +48,8 @@
 }
 .DialogTitle {
   font-family: "Poppins", sans-serif;
-  font-weight: 800;
-  color: rgb(255, 228, 196);
+  font-weight: bold;
+  color: rgb(20, 80, 70);
   padding: 2rem;
   text-align: center;
 }
@@ -59,7 +60,7 @@
   text-align: center;
 }
 .DialogBtnClose {
-  color: rgb(214, 214, 214)
+  color: antiquewhite;
 }
 .DialogBtnDelete {
   color: rgb(214, 32, 0)

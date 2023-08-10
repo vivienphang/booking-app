@@ -9,7 +9,7 @@ const PromoHeader = () => {
 
   const handleTellMore = () => {
     console.log("Tell me more.")
-    navigate("/")
+    navigate("/room")
   }
   return (
     <div className={styles.Container}>

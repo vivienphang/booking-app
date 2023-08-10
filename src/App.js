@@ -4,7 +4,7 @@ import Landing from "./pages/Landing";
 import NavLayout from "./NavLayout";
 import RoomDisplay from "./pages/RoomDisplay";
 import ViewAvailability from "./pages/ViewAvailability";
-
+import Overview from "./pages/Overview";
 
 
 function App() {
@@ -13,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<NavLayout />}>
           <Route index element={<Landing />} />
+          <Route path="/room/" element={<Overview />} />
           <Route path="/room/:id" element={<RoomDisplay />} />
           <Route path="/room/:id/availability" element={<ViewAvailability />} />
         </Route>

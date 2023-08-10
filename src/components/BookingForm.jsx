@@ -1,4 +1,4 @@
-import { Grid, TextField, Typography, Button } from "@mui/material";
+import { Chip, Grid, TextField, Typography } from "@mui/material";
 import { getRoomDataById } from "../auth/firebase";
 import { useEffect } from "react";
 import styles from "./bookingForm.module.css";
@@ -58,8 +58,8 @@ const BookingForm = ({
 
   return (
     <>
-      <Typography gutterBottom textAlign="center" marginBottom={6}>
-        <span className={styles.bookingHeader}>Booking Form</span>
+      <Typography gutterBottom textAlign="center" mb={6} mt={8}>
+        <span className={styles.bookingHeader}>Secure your next meeting</span>
       </Typography>
       <Typography gutterBottom textAlign="center" marginBottom={5}>
         <span className={styles.roomKey}>Room: </span>
@@ -141,10 +141,8 @@ const BookingForm = ({
               fullWidth
             />
           </Grid>
-          <Grid item xs={12}>
-            <Button type="submit" variant="contained" color="primary">
-              Book Meeting Room
-            </Button>
+          <Grid item xs={12} textAlign="center">
+            <Chip className={styles.ChipButton} label="Book Meeting Room" onClick={handleSubmit}></Chip>
           </Grid>
         </Grid>
       </form>
