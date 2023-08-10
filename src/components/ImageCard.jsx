@@ -27,13 +27,12 @@ const ImageCard = ({
 
   return (
     <Card
+      elevation={20}
       sx={{
-        width: "98%",
-        height: "600px",
+        width: "100%",
+        height: "450px",
         margin: 1,
         backgroundColor: "transparent",
-        borderRadius: "2%",
-        position: "relative",
         display: "flex",
       }}
     >
@@ -57,7 +56,10 @@ const ImageCard = ({
           height: "20%",
         }}
       >
-        <CardActions onClick={handleViewMore} sx={{ justifyContent: "center", cursor: "pointer"}}>
+        <CardActions
+          onClick={handleViewMore}
+          sx={{ justifyContent: "center", cursor: "pointer" }}
+        >
           <Typography
             sx={{
               fontFamily: "Poppins",

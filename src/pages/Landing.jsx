@@ -27,24 +27,26 @@ const LandingPage = () => {
   };
 
   return (
-    <div style={{marginTop: "5rem"}}>
+    <div style={{ marginTop: "5rem" }}>
       <PromoHeader />
-      <Grid container p={5}>
-        <Grid item xs={5}>
-          <CarouselInfo
-            dataCollection={dataCollection}
-            activeIndex={activeIndex}
-          />
+      <div>
+        <Grid container p={4}>
+          <Grid item xs={5}>
+            <CarouselInfo
+              dataCollection={dataCollection}
+              activeIndex={activeIndex}
+            />
+          </Grid>
+          <Grid item xs={7}>
+            <CarouselCards
+              dataCollection={dataCollection}
+              activeIndex={activeIndex}
+              setActiveIndex={setActiveIndex}
+              onSlideChange={handleSlideChange}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={7}>
-          <CarouselCards
-            dataCollection={dataCollection}
-            activeIndex={activeIndex}
-            setActiveIndex={setActiveIndex}
-            onSlideChange={handleSlideChange}
-          />
-        </Grid>
-      </Grid>
+      </div>
       <Footer />
     </div>
   );

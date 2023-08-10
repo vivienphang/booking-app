@@ -38,8 +38,8 @@ const CarouselCards = ({
         justifyContent: "center",
         alignItems: "center",
         overflow: "hidden",
-        height: "100vh",
-        padding: "20px"
+        height: "620px",
+        padding: "1px"
       }}
     >
       <Carousel
@@ -47,11 +47,12 @@ const CarouselCards = ({
         next={handleNext}
         prev={handlePrev}
         sx={{
-          width: 600,
-          height: 450,
+          width: 900,
+          height: 490,
           position: "relative",
           overflow: "hidden",
-          backgroundColor: "green",
+          // backgroundColor: "green",
+          marginRight: "24px"
           
         }}
         animation="slide"

@@ -1,0 +1,12 @@
+.CarouselText {
+  font-family: "Lora", serif;
+  font-size: 30px;
+  font-style: italic;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+.CarouselMainText {
+  font-family: "Poppins", sans-serif;
+  color: black;
+  font-size: 70px;
+}
