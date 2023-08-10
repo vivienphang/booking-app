@@ -1,13 +1,10 @@
-import { Grid, Button, Typography, Chip } from "@mui/material";
+import { Grid, Typography, Chip } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { getRoomDataById } from "../auth/firebase";
 import { useEffect, useState } from "react";
-import MonitorIcon from "@mui/icons-material/Monitor";
-import Microphone from "@mui/icons-material/KeyboardVoice";
-import Wifi from "@mui/icons-material/Wifi";
-import PowerAdaptor from "@mui/icons-material/ElectricalServices";
 import { useNavigate, useParams } from "react-router-dom";
-import styles from "./roomDisplay.module.css"
+import styles from "./roomDisplay.module.css";
+import {equipmentIcons} from "../assets/EquipmentIcons";
 
 const Img = styled("img")({
   margin: "auto",
@@ -20,11 +17,11 @@ const Img = styled("img")({
 const RoomDisplay = () => {
   const [roomDataById, setRoomDataById] = useState([]);
   let { id } = useParams();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     const data = await getRoomDataById(id);
-    console.log("data in room display -", data)
+    console.log("data in room display -", data);
     setRoomDataById(data);
   };
 
@@ -34,9 +31,9 @@ const RoomDisplay = () => {
 
   // View availability button handler
   const handleViewAvailability = () => {
-    console.log("availability btn clicked")
-    navigate(`/room/${id}/availability`)
-  }
+    console.log("availability btn clicked");
+    navigate(`/room/${id}/availability`);
+  };
 
   return (
     <Grid container spacing={2} mt={14} ml={2} mb={6} p={1}>
@@ -77,9 +74,14 @@ const RoomDisplay = () => {
             {roomDataById ? (
               <Typography textAlign="center" color="text.secondary">
                 <ul style={{ listStyle: "none", padding: 0 }}>
-                  {roomDataById.equipment?.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
+                  {roomDataById.equipment?.map((item, index) => {
+                    const IconComponent = equipmentIcons[item];
+                    return (
+                      <li key={index}>
+                        {IconComponent && <IconComponent />} {item}
+                      </li>
+                    );
+                  })}
                 </ul>
               </Typography>
             ) : (
@@ -89,7 +91,11 @@ const RoomDisplay = () => {
             )}
           </Grid>
           <Grid item textAlign="center">
-            <Chip className={styles.ChipButton} label="View Availability" onClick={handleViewAvailability}></Chip>
+            <Chip
+              className={styles.ChipButton}
+              label="View Availability"
+              onClick={handleViewAvailability}
+            ></Chip>
           </Grid>
         </Grid>
       </Grid>

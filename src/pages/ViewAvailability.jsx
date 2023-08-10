@@ -171,6 +171,8 @@ const ViewAvailability = () => {
         date: new Date(bookingData.date).toLocaleDateString(),
         start: new Date(`${bookingData.date}T${bookingData.startTime}:00`),
         end: new Date(`${bookingData.date}T${bookingData.endTime}:00`),
+        color: "black", // border color
+        backgroundColor: "rgb(200,80,65)",
       }))
     );
     if (isEditMode) {
@@ -425,7 +427,7 @@ const ViewAvailability = () => {
                           </span>
                         </Typography>
                       </div>
-                      <Divider sx={{ backgroundColor: "grey", mt: 4}}/>
+                      <Divider sx={{ backgroundColor: "grey", mt: 4 }} />
                     </>
                   )}
                 </Stack>
@@ -433,7 +435,7 @@ const ViewAvailability = () => {
 
               {isEditMode ? (
                 <>
-                <Divider sx={{ backgroundColor: "grey", mt: 4}}/>
+                  <Divider sx={{ backgroundColor: "grey", mt: 4 }} />
                   <Typography display="flex" justifyContent="center" margin={2}>
                     <IconButton onClick={handleSaveButton}>
                       <SaveAltOutlinedIcon

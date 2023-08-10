@@ -1,6 +1,13 @@
-import { Chip, Grid, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  AlertTitle,
+  Chip,
+  Grid,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { getRoomDataById } from "../auth/firebase";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import styles from "./bookingForm.module.css";
 import { addNewBooking } from "../auth/firebase";
 
@@ -13,6 +20,9 @@ const BookingForm = ({
   events,
   setEvents,
 }) => {
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+
   const fetchData = async () => {
     const data = await getRoomDataById(roomId);
     setSelectedRoomData(data);
@@ -35,10 +45,21 @@ const BookingForm = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Check if any required field is empty
+    if (
+      !bookingForm.title ||
+      !bookingForm.date ||
+      !bookingForm.startTime ||
+      !bookingForm.endTime ||
+      !bookingForm.username
+    ) {
+      setErrorAlertOpen(true); // Open the error alert
+      return;
+    }
     const newBooking = await addNewBooking(bookingForm);
 
     if (newBooking) {
-      console.log("Handle submit new booking - ", newBooking)
+      console.log("Handle submit new booking - ", newBooking);
       setEvents([
         ...events,
         {
@@ -48,12 +69,25 @@ const BookingForm = ({
           end: `${newBooking.newBooking.date}T${newBooking.newBooking.endTime}:00`,
         },
       ]);
+      setSuccessAlertOpen(true);
+      setTimeout(() => {
+        setSuccessAlertOpen(false); // Close the success alert after 3 seconds
+      }, 3000);
     } else {
-      alert("Error in submitting a booking.");
+      setErrorAlertOpen(true);
     }
     // reset the form
-    setBookingForm({ title: "", date: "", startTime: "", endTime: "", username: ""});
-    alert("Booking successful");
+    setBookingForm({
+      title: "",
+      date: "",
+      startTime: "",
+      endTime: "",
+      username: "",
+    });
+  };
+
+  const handleAlertClose = () => {
+    setErrorAlertOpen(false);
   };
 
   return (
@@ -142,10 +176,39 @@ const BookingForm = ({
             />
           </Grid>
           <Grid item xs={12} textAlign="center">
-            <Chip className={styles.ChipButton} label="Book Meeting Room" onClick={handleSubmit}></Chip>
+            <Chip
+              className={styles.ChipButton}
+              label="Book Meeting Room"
+              onClick={handleSubmit}
+            ></Chip>
           </Grid>
         </Grid>
       </form>
+      {successAlertOpen && (
+        <Alert severity="success" onClose={handleAlertClose}
+        sx={{
+          borderRadius: "20px",
+          backgroundColor: "rgb(20,80,70)",
+          color: "antiquewhite",
+        }}>
+          Booking successful!
+        </Alert>
+      )}
+      {errorAlertOpen && (
+        <Alert
+          sx={{
+            borderRadius: "20px",
+            backgroundColor: "rgb(200,80,65, 0.5)",
+            color: "antiquewhite",
+          }}
+          severity="error"
+          onClose={handleAlertClose}
+          open={errorAlertOpen}
+        >
+          <AlertTitle>Error</AlertTitle>
+          Please complete all fields.
+        </Alert>
+      )}
     </>
   );
 };
