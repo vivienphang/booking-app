@@ -27,7 +27,6 @@ const LandingPage = () => {
   };
 
   return (
-    // <Box display="flex" justifyContent="center" alignItems="center" mt={8}>
     <div style={{marginTop: "5rem"}}>
       <PromoHeader />
       <Grid container p={5}>
