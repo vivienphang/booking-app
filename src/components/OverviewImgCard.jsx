@@ -1,23 +1,8 @@
-import {
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-} from "@mui/material";
+import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import styles from "./overviewImgCard.module.css";
-// import THREE_PAX_V1 from "../assets/3pax-v1.jpeg";
-// import FOUR_PAX_V1 from "../assets/4pax-v1.jpeg";
-// import EIGHT_PAX_V1 from "../assets/8pax-v1.jpg";
-// import FOURTEEN_PAX_V1 from "../assets/14pax-v1.jpeg";
-// import TWENTYTWO_PAX_V1 from "../assets/22pax-v1.jpeg";
-// import THREE_PAX_V1 from "assets/photoURL/3pax-v1.jpeg";
-// import FOUR_PAX_V1 from "assets/photoURL/4pax-v1.jpeg";
-// import EIGHT_PAX_V1 from "assets/photoURL/8pax-v1.jpg";
-// import FOURTEEN_PAX_V1 from "assets/photoURL/14pax-v1.jpeg";
-// import TWENTYTWO_PAX_V1 from "assets/photoURL/22pax-v1.jpeg";
-
 
 const OverviewImgCard = ({
   capacity,
@@ -27,10 +12,11 @@ const OverviewImgCard = ({
   size,
   equipment,
   selectedRoomId,
-  url
+  url,
+  location,
 }) => {
   const navigate = useNavigate();
-  console.log("URL:", url)
+  console.log("URL:", url);
 
   // View more button handler
   const handleViewMore = () => {
@@ -55,22 +41,34 @@ const OverviewImgCard = ({
         }}
       >
         <CardMedia
-          sx={{ height: "70%", width: "100%", borderRadius: 6}}
+          sx={{ height: "70%", width: "100%", borderRadius: 6 }}
           component="img"
           alt="meeting room"
           src={url}
         />
         <CardContent>
-          <Typography className={styles.CardHeader}>
-            {name}
-          </Typography>
-          <div style={{ display: "flex" }}>
-            <PersonIcon sx={{ color: "rgb(20, 80, 70)", mr: "2px" }} />
-            <Typography sx={{ fontFamily: "Poppins", color: "rgb(20, 80, 70)" }}>
-              <span style={{ fontSize: "14px"}}>
-                up to {capacity}{" "}
-              </span>
-            </Typography>
+          <Typography className={styles.CardHeader}>{name}</Typography>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div style={{ display: "flex" }}>
+              <PersonIcon
+                sx={{ color: "rgb(20, 80, 70)", mr: "2px", fontSize: "20px" }}
+              />
+              <Typography
+                sx={{ fontFamily: "Poppins", color: "rgb(20, 80, 70)" }}
+              >
+                <span style={{ fontSize: "12px" }}>up to {capacity} </span>
+              </Typography>
+            </div>
+            <div style={{ display: "flex" }}>
+              <LocationOnIcon
+                sx={{ color: "rgb(20, 80, 70)", mr: "2px", fontSize: "20px" }}
+              />
+              <Typography
+                sx={{ fontFamily: "Poppins", color: "rgb(20, 80, 70)" }}
+              >
+                <span style={{ fontSize: "12px" }}>{location}</span>
+              </Typography>
+            </div>
           </div>
         </CardContent>
       </Card>

@@ -5,6 +5,7 @@ import {
   Grid,
   TextField,
   Typography,
+  // DatePicker,
 } from "@mui/material";
 import { getRoomDataById } from "../auth/firebase";
 import { useState, useEffect } from "react";
@@ -22,7 +23,7 @@ const BookingForm = ({
 }) => {
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
-
+  console.log("BookingForm initial state: ", bookingForm);
   const fetchData = async () => {
     const data = await getRoomDataById(roomId);
     setSelectedRoomData(data);
@@ -130,7 +131,15 @@ const BookingForm = ({
               }}
               required
               fullWidth
+              InputProps={{
+                min: new Date().toISOString().split("T")[0],
+              }}
             />
+            {/* <DatePicker
+              label="Date of meeting"
+              value={bookingForm.date}
+              onChange={handleFormInput}
+            /> */}
           </Grid>
           <Grid item xs={6}>
             <TextField
@@ -185,12 +194,15 @@ const BookingForm = ({
         </Grid>
       </form>
       {successAlertOpen && (
-        <Alert severity="success" onClose={handleAlertClose}
-        sx={{
-          borderRadius: "20px",
-          backgroundColor: "rgb(20,80,70)",
-          color: "antiquewhite",
-        }}>
+        <Alert
+          severity="success"
+          onClose={handleAlertClose}
+          sx={{
+            borderRadius: "20px",
+            backgroundColor: "rgb(20,80,70)",
+            color: "antiquewhite",
+          }}
+        >
           Booking successful!
         </Alert>
       )}

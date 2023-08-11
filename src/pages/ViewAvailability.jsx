@@ -49,7 +49,7 @@ const ViewAvailability = () => {
   const [bookingForm, setBookingForm] = useState({
     roomName: "",
     title: "",
-    date: "",
+    date: new Date().toISOString().split('T')[0],
     startTime: "",
     endTime: "",
     username: "",

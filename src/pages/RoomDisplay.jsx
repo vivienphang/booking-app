@@ -1,10 +1,10 @@
-import { Grid, Typography, Chip } from "@mui/material";
+import { Grid, Typography, Chip, Divider } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { getRoomDataById } from "../auth/firebase";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./roomDisplay.module.css";
-import {equipmentIcons} from "../assets/EquipmentIcons";
+import { equipmentIcons } from "../assets/EquipmentIcons";
 
 const Img = styled("img")({
   margin: "auto",
@@ -45,45 +45,109 @@ const RoomDisplay = () => {
           width="800"
         />
       </Grid>
-      <Grid item xs={4} sm container>
+      <Grid
+        item
+        xs={4}
+        sm
+        container
+        textAlign="center"
+        justifyContent="center"
+        display="block"
+      >
+        <Typography
+          sx={{
+            fontFamily: "Poppins",
+            fontWeight: "bold",
+            color: "rgb(20, 80, 70)",
+            fontSize: "55px",
+            margin: "0 auto",
+            pb: "50px",
+          }}
+        >
+          room info
+        </Typography>
         <Grid item xs container direction="column">
           <Grid item xs>
             <Typography
-              textAlign="center"
-              gutterBottom
-              sx={{ fontSize: "80px", fontWeight: "bold" }}
-              component="div"
+              sx={{
+                fontFamily: "Poppins",
+                fontSize: "44px",
+                color: "rgb(20,80,70)",
+              }}
             >
               {roomDataById.name}
             </Typography>
-            <Typography textAlign="center" variant="h5" mb={2}>
+            <Typography
+              mb={1}
+              sx={{
+                fontFamily: "Poppins",
+                fontSize: "18px",
+                color: "rgb(20,80,70)",
+              }}
+            >
               Capacity: up to {roomDataById.capacity} pax
             </Typography>
             <Typography
               textAlign="center"
-              variant="body2"
+              fontSize="14px"
               gutterBottom
               color="text.secondary"
-              mb={8}
+              mb={5}
             >
               Room size: {roomDataById.size}
             </Typography>
-            <Typography textAlign="center" variant="h5" gutterBottom>
+            <Typography
+              textAlign="center"
+              gutterBottom
+              sx={{
+                fontFamily: "Poppins",
+                fontSize: "24px",
+                color: "rgb(20,80,70)",
+              }}
+            >
               Equipment:
             </Typography>
+            <Divider sx={{ color: "grey", width: "70%", margin: "0 auto" }} />
             {roomDataById ? (
-              <Typography textAlign="center" color="text.secondary">
-                <ul style={{ listStyle: "none", padding: 0 }}>
-                  {roomDataById.equipment?.map((item, index) => {
-                    const IconComponent = equipmentIcons[item];
-                    return (
-                      <li key={index}>
-                        {IconComponent && <IconComponent />} {item}
-                      </li>
-                    );
-                  })}
-                </ul>
-              </Typography>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Typography
+                  textAlign="center"
+                  sx={{ fontFamily: "Poppins" }}
+                  color="text.secondary"
+                >
+                  <ul
+                    style={{
+                      listStyle: "none",
+                      padding: 0,
+                      display: "flex",
+                      flexDirection: "row",
+                      flexWrap: "wrap",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {roomDataById.equipment?.map((item, index) => {
+                      const IconComponent = equipmentIcons[item];
+                      return (
+                        <li
+                          key={index}
+                          style={{
+                            marginRight: "10px",
+                            marginBottom: "20px",
+                            flex: "0 0 calc(50% - 10px)",
+                          }}
+                        >
+                          <div style={{ display: "block" }}>
+                            {IconComponent && <IconComponent />}
+                            <Typography sx={{ textAlign: "center" }}>
+                              {item}
+                            </Typography>
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </Typography>
+              </div>
             ) : (
               <Typography textAlign="center" color="text.secondary">
                 Loading...

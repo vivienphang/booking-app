@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { getMeetingRooms } from "../auth/firebase";
 import OverviewImgCard from "../components/OverviewImgCard";
 
@@ -17,30 +17,27 @@ const Overview = () => {
     fetchData();
   }, []);
 
-  //   const meetingRoomsInfo = overviewData.map((ele, index) => {
-  //     return (
-  //       <OverviewImgCard
-  //         key={ele.id}
-  //         capacity={ele.capacity}
-  //         name={ele.name}
-  //         meetingRoomId={ele.meetingRoomId}
-  //         size={ele.size}
-  //         id={ele.id}
-  //         equipment={ele.equipment}
-  //         url={ele.photoUrl}
-  //       />
-  //     );
-  //   });
-
   return (
     <div>
       <Grid container xs={12}>
+        <Grid item xs={12} sx={{ margin: "8rem 0rem 1rem 3rem", p: 2 }}>
+          <Typography
+            sx={{
+              fontFamily: "Poppins",
+              fontWeight: "bold",
+            }}
+          >
+            <span style={{ color: "rgb(20, 80, 70)", fontSize: "40px" }}>
+              all rooms
+            </span>
+          </Typography>
+        </Grid>
         <Grid
           item
           xs={12}
           sx={{
             p: 2,
-            margin: "8rem 3rem",
+            // margin: "8rem 3rem",
             display: "flex",
             justifyContent: "center",
             flexWrap: "wrap",
@@ -59,6 +56,7 @@ const Overview = () => {
                 id={ele.id}
                 equipment={ele.equipment}
                 url={ele.photoUrl}
+                location={ele.location}
               />
             ))
           )}
