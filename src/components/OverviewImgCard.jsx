@@ -25,13 +25,14 @@ const OverviewImgCard = ({
   };
 
   return (
-    <div style={{ display: "flex" }}>
+    <div style={{ display: "flex"
+    }}>
       <Card
         onClick={handleViewMore}
         elevation={8}
         sx={{
-          width: 250,
-          height: 345,
+          width: "25vw",
+          height: "45vh",
           p: 1,
           m: 1,
           borderRadius: 8,
@@ -46,8 +47,23 @@ const OverviewImgCard = ({
           alt="meeting room"
           src={url}
         />
-        <CardContent>
-          <Typography className={styles.CardHeader}>{name}</Typography>
+        <CardContent
+          sx={{
+            "@media (min-width: 1000px) and (min-height: 1000px)": {
+              fontSize: "50px",
+            },
+          }}
+        >
+          <Typography
+            sx={{
+              "@media (min-width: 1000px) and (min-height: 1000px)": {
+                fontSize: "50px",
+              },
+            }}
+            className={styles.CardHeader}
+          >
+            {name}
+          </Typography>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div style={{ display: "flex" }}>
               <PersonIcon

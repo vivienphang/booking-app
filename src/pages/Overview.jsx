@@ -9,7 +9,7 @@ const Overview = () => {
 
   const fetchData = async () => {
     const data = await getMeetingRooms();
-    console.log("overview data - ", data);
+    // console.log("overview data - ", data);
     setOverviewData(data);
     setIsLoading(false);
   };
@@ -18,7 +18,9 @@ const Overview = () => {
   }, []);
 
   return (
-    <div>
+    <div
+      style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+    >
       <Grid container xs={12}>
         <Grid item xs={12} sx={{ margin: "8rem 0rem 1rem 3rem", p: 2 }}>
           <Typography
@@ -37,7 +39,7 @@ const Overview = () => {
           xs={12}
           sx={{
             p: 2,
-            // margin: "8rem 3rem",
+            marginBottom: "3rem",
             display: "flex",
             justifyContent: "center",
             flexWrap: "wrap",
