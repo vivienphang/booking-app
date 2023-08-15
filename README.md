@@ -1,6 +1,22 @@
 # book it.
 
-**book it.** is an app that manages meeting room booking management system. I was inspired to build this app because I have worked with companies that has meeting rooms, but without a scheduler. Whenever my teammates and I needed a room for discussion, we had to walk around to look for available rooms. Hence, **book it.** is the ultimate solution for effortless meeting room booking and management which saves my coworkers' time and efficiency. Now, booking a room only takes a few clicks!
+**book it.** is an app that manages meeting room booking management system. I was inspired to build this app because I have worked with companies that has meeting rooms, but without a scheduler. Whenever my teammates and I needed a room for discussion, we had to walk around to look for available rooms. Hence, **book it.** is the ultimate solution for effortless meeting room booking and management which saves my coworkers' time and efficiency. Now, booking a room only takes a few clicks! Check out the deployed app [here](https://book-it-topaz.vercel.app/).
+
+## Features
+
+1. User can choose to click "Tell me more" to be redirected to **Overview page** or select the image cards and be redirected to **Room Display page**.
+2. Once a specific meeting room is selected, user is redirected to **Room Display page** where all the room amenities are displayed.
+3. If user has decided on a meeting room, click View Availability to be redirected to **View Availability page**.
+4. The **View Availability page** consisted a Full calendar and a booking form. User can filter the calendar based on week, day, or month.
+5. User can start booking a meeting room by filling out the form. **Note:** Leave no fields blank.
+6. Once booking is done, the event will be shown in the calendar.
+7. User can click on the event in the calendar and a popup containing the event details will be shown.
+8. User can choose to edit or delete the event details.
+9. Click the **book it.** logo to return to **Landing page**.
+
+Future improvements:
+1. Checking of double-booking of events.
+
 
 ## App Walkthrough
 
@@ -39,8 +55,10 @@
 <ul>
 <li>JavaScript</li>
 <li>React</li>
+<li>React Router DOM </li>
 <li>Material UI</li>
 <li>Firebase</li>
+<li>FullCalender.io</li>
 </ul>
 
 
