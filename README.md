@@ -2,7 +2,13 @@
 
 **book it.** is an app that manages meeting room booking management system. I was inspired to build this app because I have worked with companies that has meeting rooms, but without a scheduler. Whenever my teammates and I needed a room for discussion, we had to walk around to look for available rooms. Hence, **book it.** is the ultimate solution for effortless meeting room booking and management which saves my coworkers' time and efficiency. Now, booking a room only takes a few clicks! Check out the deployed app [here](https://book-it-topaz.vercel.app/).
 
+
 ## Features
+
+1. User can **view** all available meeting rooms in the company.
+2. User can **add, edit and delete** a booking made.
+
+## User Stories
 
 1. User can choose to click "Tell me more" to be redirected to **Overview page** or select the image cards and be redirected to **Room Display page**.
 2. Once a specific meeting room is selected, user is redirected to **Room Display page** where all the room amenities are displayed.
@@ -13,9 +19,6 @@
 7. User can click on the event in the calendar and a popup containing the event details will be shown.
 8. User can choose to edit or delete the event details.
 9. Click the **book it.** logo to return to **Landing page**.
-
-Future improvements:
-1. Checking of double-booking of events.
 
 
 ## App Walkthrough
@@ -47,6 +50,8 @@ Future improvements:
 - User can choose to edit or delete the event.
 ![7](https://github.com/vivienphang/booking-app/assets/101629147/76e34e99-07d0-49dc-990b-b31f7cc6a58a)
 
+Future add-ons for the app:
+1. Checking of double-booking of events.
 
 ## Technologies Used
 
