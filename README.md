@@ -1,4 +1,5 @@
-# book it.
+# <img width="198" height="64" alt="Screenshot 2023-08-15 at 10 39 23 PM" src="https://github.com/vivienphang/booking-app/assets/101629147/dcac909f-b1d0-4f74-bd47-5638d7e6a0c7">
+
 
 **book it.** is an app that manages meeting room booking management system. I was inspired to build this app because I have worked with companies that has meeting rooms, but without a scheduler. Whenever my teammates and I needed a room for discussion, we had to walk around to look for available rooms. Hence, **book it.** is the ultimate solution for effortless meeting room booking and management which saves my coworkers' time and efficiency. Now, booking a room only takes a few clicks! Check out the deployed app [here](https://book-it-topaz.vercel.app/).
 
