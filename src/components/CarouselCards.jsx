@@ -1,11 +1,13 @@
 import ImageCard from "./ImageCard";
 import Carousel from "react-material-ui-carousel";
+import { useMediaQuery } from "@mui/material";
 
 const CarouselCards = ({
   dataCollection,
   activeIndex,
   setActiveIndex,
 }) => {
+  const isMobile = useMediaQuery("(max-width:600px)");
   const meetingRoomsInfo = dataCollection.map((ele, index) => {
     return (
       <ImageCard
@@ -17,7 +19,6 @@ const CarouselCards = ({
         id={ele.id}
         equipment={ele.equipment}
         url={ele.photoUrl}
-        // index={index}
       />
     );
   });
@@ -39,7 +40,7 @@ const CarouselCards = ({
         justifyContent: "center",
         alignItems: "center",
         overflow: "hidden",
-        height: "620px",
+        height: isMobile ? "auto" : "620px",
         padding: "1px"
       }}
     >
@@ -48,12 +49,12 @@ const CarouselCards = ({
         next={handleNext}
         prev={handlePrev}
         sx={{
-          width: 900,
-          height: 490,
+          width: isMobile ? 450 : 900,
+          height: isMobile ? 290 : 490,
           position: "relative",
           overflow: "hidden",
-          // backgroundColor: "green",
-          marginRight: "24px"
+          marginRight: isMobile ? "0" : "24px",
+          paddingBottom: isMobile ? "24px" : "0",
           
         }}
         animation="slide"

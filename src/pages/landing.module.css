@@ -1,8 +1,15 @@
 .Container {
-    margin-top: 5rem;
-    height: 720px;
-    width: 100vw;
-    background-color: rgb(20, 80, 70);
-    display: flex;
-    align-items: center;
+  margin-top: 5rem;
+  height: 720px;
+  width: 100vw;
+  background-color: rgb(20, 80, 70);
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 600px) {
+  .Container {
+    height: 620px;
+    justify-content: flex-start;
+  }
 }

@@ -42,7 +42,7 @@
 
 @media (max-width: 600px) {
   .Container {
-    height: 720px;
+    height: 620px;
     justify-content: flex-start;
   }
   .ChipButton {

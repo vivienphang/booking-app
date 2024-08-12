@@ -1,102 +1,80 @@
-import { Chip, Typography, Card, CardContent } from "@mui/material";
+import {
+  Chip,
+  Typography,
+  Card,
+  CardContent,
+  useMediaQuery,
+} from "@mui/material";
 import styles from "./carouselinfo.module.css";
 const CarouselInfo = ({ dataCollection, activeIndex }) => {
+  const isMobile = useMediaQuery("(max-width:600px)");
   if (dataCollection.length === 0) {
     return <div>LOADING...</div>;
   }
   const room = dataCollection[activeIndex];
-  console.log("active index room data - ", room);
   return (
     <div
+      id="carousel-container"
       style={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         overflow: "hidden",
-        // height: "100vh",
       }}
     >
       <Card
+        id="carousel-card-info"
+        className={styles.CarouselCard}
         elevation={0}
-        sx={{
-          marginLeft: "80px",
-          marginTop: "150px",
-          width: "100%",
-          height: "400px",
-          borderRadius: "2%",
-          position: "relative",
-          display: "flex",
-          backgroundColor: "transparent",
-        }}
       >
         <CardContent display="flex" flexDirection="column">
-          <Typography textAlign="left" marginBottom="80px">
+          <Typography
+            textAlign="left"
+            marginBottom={isMobile ? "10px" : "80px"}
+          >
             <span className={styles.CarouselText}>take a sneak peek...</span>
           </Typography>
-          <Typography
-            sx={{
-              fontFamily: "Poppins",
-              color: "black",
-              fontSize: "24px",
-            }}
-            marginBottom="10px"
-          >
-            Room:{" "}
+          <Typography marginBottom="10px">
+            <span className={styles.CarouselKeyName}>Room: </span>
             <Chip
               label={`${room.name}`}
               sx={{
                 backgroundColor: "rgb(20, 80, 70, 0.9)",
-                // fontWeight: "bold",
                 color: "antiquewhite",
                 padding: "5px 15px",
-                fontSize: "20px",
+                fontSize: "16px",
                 fontFamily: "Poppins, sans-serif",
-                height: "38px",
-                marginLeft: "10px"
+                height: isMobile ? "28px" : "38px",
+                marginLeft: "10px",
               }}
             />
           </Typography>
-          <Typography
-            sx={{
-              fontFamily: "Poppins",
-              color: "black",
-              fontSize: "24px",
-              
-            }}
-            marginBottom="10px"
-          >
-            Capacity:{" "}
+          <Typography marginBottom="10px">
+            <span className={styles.CarouselKeyName}>Capacity: </span>
             <Chip
               label={`up to ${room.capacity} pax`}
               sx={{
                 backgroundColor: "rgb(20, 80, 70, 0.9)",
-                height: "38px",
+                height: isMobile ? "28px" : "38px",
                 marginLeft: "10px",
                 color: "antiquewhite",
                 padding: "5px 15px",
-                fontSize: "20px",
+                fontSize: "16px",
                 fontFamily: "Poppins, sans-serif",
               }}
             />
           </Typography>
-          <Typography
-            sx={{
-              fontFamily: "Poppins",
-              color: "black",
-              fontSize: "24px",
-            }}
-            marginBottom="10px"
-          >
-            Size:{" "}
+          <Typography marginBottom="10px">
+            <span className={styles.CarouselKeyName}>Size: </span>
             <Chip
               label={`${room.size}`}
               sx={{
                 backgroundColor: "rgb(20, 80, 70, 0.9)",
-                height: "38px",
+                height: isMobile ? "28px" : "38px",
                 marginLeft: "10px",
                 color: "antiquewhite",
                 padding: "5px 15px",
-                fontSize: "20px",
+                fontSize: "16px",
                 fontFamily: "Poppins, sans-serif",
               }}
             />

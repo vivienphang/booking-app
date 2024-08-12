@@ -5,8 +5,34 @@
   letter-spacing: 1px;
   font-weight: bold;
 }
-.CarouselMainText {
-  font-family: "Poppins", sans-serif;
+.CarouselCard {
+  margin-left: 80px;
+  margin-top: 150px;
+  width: 100%;
+  border-radius: 2%;
+  height: 400px;
+  position: relative;
+  display: flex;
+  background-color: transparent !important;
+}
+.CarouselKeyName {
+  font-family: "Poppins";
   color: black;
-  font-size: 70px;
+  font-size: 24px;
+}
+@media (max-width: 600px) {
+  .CarouselText {
+    font-size: 18px;
+  }
+  .CarouselCard {
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    margin-left: 0px;
+    margin-top: 0px;
+    align-items: center;
+  }
+  .CarouselKeyName {
+    font-size: 16px;
+  }
 }

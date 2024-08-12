@@ -43,20 +43,17 @@ const PromoHeader = () => {
               Unlock seamless meeting room bookings now
             </span>
           </Typography>
-          <Typography
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            // marginTop={isMobile ? "0" : "0"}
-          >
+          <Typography display="flex" flexDirection="column" alignItems="center">
             {!isMobile && (
               <img src={teapot} alt="teapot" className={styles.TeapotIcon} />
             )}
-            <Chip
-              label="Tell me more"
-              className={styles.ChipButton}
-              onClick={handleTellMore}
-            />
+            {!isMobile && (
+              <Chip
+                label="Tell me more"
+                className={styles.ChipButton}
+                onClick={handleTellMore}
+              />
+            )}
           </Typography>
         </Grid>
         <Grid
@@ -65,6 +62,7 @@ const PromoHeader = () => {
           sm={6}
           id="header-image-grid"
           display="flex"
+          flexDirection="column"
           alignItems="center"
         >
           <Card
@@ -72,9 +70,9 @@ const PromoHeader = () => {
               borderRadius: "15px",
               display: "flex",
               alignContent: "center",
-              mt: isMobile ? "20px" : "0",
               mx: isMobile ? "auto" : 5,
               maxWidth: isMobile ? "80%" : "80%",
+              mb: isMobile ? "40px" : "0",
             }}
           >
             <CardMedia
@@ -87,6 +85,13 @@ const PromoHeader = () => {
               }}
             />
           </Card>
+          {isMobile && (
+            <Chip
+              label="Tell me more"
+              className={styles.ChipButton}
+              onClick={handleTellMore}
+            />
+          )}
         </Grid>
       </Grid>
     </div>
