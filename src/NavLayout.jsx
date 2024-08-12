@@ -59,7 +59,7 @@ const NavLayout = () => {
           alignItems="center"
           marginTop={1}
         >
-          <Grid item xs={12} className={styles.OutletBackground}>
+          <Grid item xs={12}>
             <Outlet />
           </Grid>
           <Footer />
